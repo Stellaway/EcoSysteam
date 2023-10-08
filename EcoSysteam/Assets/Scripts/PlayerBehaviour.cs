@@ -15,7 +15,7 @@ public class PlayerBehaviour : Synchronizable
         float delta = Time.deltaTime; // másodpercben
         // ez itt egy egyenes vonalú egyenletes mozgás
         Vector2 newPos = currentPos + speed * delta;
-        // elküldjük a hálózaton az új pozíciót
+        // elküldjük a hálózaton az új pozíciót (TODO ez lehet majd változik)
         UpdatePosition(newPos);
     }
 
@@ -37,13 +37,13 @@ public class PlayerBehaviour : Synchronizable
 
     // This can be called from the clients, and will be run on the server
     [ServerRpc]
-    void SubmitRandomPositionRequestServerRpc(ServerRpcParams rpcParams = default) {
+    private void SubmitRandomPositionRequestServerRpc(ServerRpcParams rpcParams = default) {
         MoveServer();
     }
 
     private void MoveServer() {
-        UpdatePosition(new Vector2(Random.Range(-3f, 3f), Random.Range(-3f, 3f)));
         spawnTest();
+        UpdatePosition(new Vector2(Random.Range(-3f, 3f), Random.Range(-3f, 3f)));
     }
 
 
@@ -56,10 +56,13 @@ public class PlayerBehaviour : Synchronizable
         // https://docs-multiplayer.unity3d.com/netcode/current/basics/object-spawning/
         // szerveren lehet csak spawnolni (a randomot biztos lehetne szebben)
         // illetve a pozíciót is itt kéne megadni, és nem spawnolás után TODO xd!
+        // most úgy csináltam, hogy a teleport előtti pozícióra teszi a dolgot
         // itt tudjuk majd, hogy hová is szeretnénk tenni
         // persze ez állatoknál nem ilyen egyszerű, ők úgyis mozognak később is
         GameObject mitAkarokSpawnolni = Random.Range(-1f, 1f) > 0 ? BushPrefab : TreePrefab;
-        GameObject go = Instantiate(mitAkarokSpawnolni, Vector3.zero, Quaternion.identity);
+        //GameObject go = Instantiate(mitAkarokSpawnolni, Vector3.zero, Quaternion.identity);
+        Vector3 newPos = new Vector3(transform.position.x, transform.position.y, 0);
+        GameObject go = Instantiate(mitAkarokSpawnolni, newPos, Quaternion.identity);
         go.GetComponent<NetworkObject>().Spawn();
     }
 }

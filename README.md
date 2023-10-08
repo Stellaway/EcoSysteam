@@ -22,6 +22,8 @@ Az elnevezéseket próbáljuk konzisztensen tartani snake_case/camelCase/PascalC
 
 Synchronizable lett a közös ős neve végül, egyelőre. Ebből származik a PlayerBehaviour (valahogy ez a ...Behaviour a szokásos elnevezés, úgy tűnik). Próbáltam szépen kommentezni a kódot, ha valami nem világos, olvassátok el plíz :DD
 
+Újragondolva, perpillanat nem látom értelmét a közös ősnek, mert van egy komponens ami tökéletesen megcsinálja a transzform szinkronizációt, interpolációval meg mindennel, szóval azt használjuk most. Ugyanakkor nem töröltem még ki a Synchronizable-t, hátha később lesz értelme egy közös ősnek. De perpillanat letörlésre van ítélve szerintem.
+
 Amit majd ügyködni kell, az a PlayerBehaviour (illetve egyéb, AnimalBehaviour ill PlantBehaviour) ServerUpdate() függvénye. Itt kell kiszámolni az új pozíciót. Persze az még nem világos, hogy hogy fognak egymással kommunikálni az objektumok, illetve a spawnolás sem egyértelmű egyelőre.
 
 Ha Unity-ben szeretnétek tesztelni, akkor a HOST gombot nyomjátok (miután elindítottátok a játékot): az szerver és kliens is egyben.
