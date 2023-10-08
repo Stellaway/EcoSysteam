@@ -20,7 +20,7 @@ public class PlayerBehaviour : Synchronizable
     }
 
     // This will be called when the prefab spawns, but we only want to randomize the position
-    // from the "owner": the client that corresponds to the player
+    // from the "owner": only from the client that corresponds to the player
     // (at least if I understand it well xd)
     public override void OnNetworkSpawn() {
         if (IsOwner)
@@ -28,11 +28,38 @@ public class PlayerBehaviour : Synchronizable
     }
 
     // Ask the server to place the bogyesz on a random position
-    public void Move() => SubmitRandomPositionRequestServerRpc();
+    // it is called from the GUI, and from OnNetworkSpawn
+    // and it may be called from the server from the GUI
+    public void Move() {
+        if (NetworkManager.Singleton.IsServer) MoveServer();
+        else SubmitRandomPositionRequestServerRpc();
+    }
 
     // This can be called from the clients, and will be run on the server
     [ServerRpc]
     void SubmitRandomPositionRequestServerRpc(ServerRpcParams rpcParams = default) {
+        MoveServer();
+    }
+
+    private void MoveServer() {
         UpdatePosition(new Vector2(Random.Range(-3f, 3f), Random.Range(-3f, 3f)));
+        spawnTest();
+    }
+
+
+    // a spawnolás teszthez (inspectorban drag-n-droppal be lehet tenni)
+    public GameObject BushPrefab;
+    public GameObject TreePrefab;
+
+    private void spawnTest() {
+        // TODO teszt, spawnolásra, most akkor, ha move-ra nyomunk
+        // https://docs-multiplayer.unity3d.com/netcode/current/basics/object-spawning/
+        // szerveren lehet csak spawnolni (a randomot biztos lehetne szebben)
+        // illetve a pozíciót is itt kéne megadni, és nem spawnolás után TODO xd!
+        // itt tudjuk majd, hogy hová is szeretnénk tenni
+        // persze ez állatoknál nem ilyen egyszerű, ők úgyis mozognak később is
+        GameObject mitAkarokSpawnolni = Random.Range(-1f, 1f) > 0 ? BushPrefab : TreePrefab;
+        GameObject go = Instantiate(mitAkarokSpawnolni, Vector3.zero, Quaternion.identity);
+        go.GetComponent<NetworkObject>().Spawn();
     }
 }
