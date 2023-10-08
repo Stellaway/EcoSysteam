@@ -30,3 +30,13 @@ Amit majd ügyködni kell, az a PlayerBehaviour (illetve egyéb, AnimalBehaviour
 
 Ha Unity-ben szeretnétek tesztelni, akkor a HOST gombot nyomjátok (miután elindítottátok a játékot): az szerver és kliens is egyben.
 
+# Aktuális állapot
+
+perpillanat annyi a demo "ai"-ja a dolognak, hogy:
+
+- fa ill bokor nem csinál semmit (spawnolt helyen marad)
+
+- kukac ill egér a spawnoláskor legközelebbi játékos irányába megy (más a sebességük)
+
+- játékos jobbra megy folyamatosan, gomb megnyomásakor (már csak az a játékos, amelyik a gombját megnyomta) leidéz egy random dolgot, majd elteleportál egy random helyre
+
