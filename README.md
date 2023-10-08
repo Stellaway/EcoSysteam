@@ -8,7 +8,9 @@ As you start to play you can see a small ecosystem with players' creatures and t
 * Unity Netcode for GameObjects
 * Unity Transport
 
-# Információ kollaborátoroknak (by 1234ab) OLVASSÁTOK EL PLS XD
+# Információ kollaborátoroknak (by 1234ab)
+
+Előre sry, egy kicsit katyvasz, de remélem vannak benne hasznos infók.
 
 Használt Unity verzió: 2022.3.10f1 (LTS)
 

@@ -10,7 +10,7 @@ public class PlayerBehaviour : Synchronizable
         // így el lehet érni az éppen aktuális pozíciót
         // transform.position.z == 0.0f, sztem szerencsésebb Vector2-t használni
         Vector2 currentPos = new Vector2(transform.position.x, transform.position.y);
-        Vector2 speed = new Vector2(5, 0); // pixel / sec
+        Vector2 speed = new Vector2(2, 0); // pixel / sec
         // előző frissítés óta eltelt idő (HASZNÁLJÁTOK PLS, HOGY FPS-FÜGGETLEN LEGYEN):
         float delta = Time.deltaTime; // másodpercben
         // ez itt egy egyenes vonalú egyenletes mozgás
@@ -50,6 +50,8 @@ public class PlayerBehaviour : Synchronizable
     // a spawnolás teszthez (inspectorban drag-n-droppal be lehet tenni)
     public GameObject BushPrefab;
     public GameObject TreePrefab;
+    public GameObject MousePrefab;
+    public GameObject WormPrefab;
 
     private void spawnTest() {
         // TODO teszt, spawnolásra, most akkor, ha move-ra nyomunk
@@ -59,7 +61,16 @@ public class PlayerBehaviour : Synchronizable
         // most úgy csináltam, hogy a teleport előtti pozícióra teszi a dolgot
         // itt tudjuk majd, hogy hová is szeretnénk tenni
         // persze ez állatoknál nem ilyen egyszerű, ők úgyis mozognak később is
-        GameObject mitAkarokSpawnolni = Random.Range(-1f, 1f) > 0 ? BushPrefab : TreePrefab;
+        int rnd = (int)Random.Range(0f, 3.99f);
+        GameObject mitAkarokSpawnolni = BushPrefab;
+        switch(rnd) {
+            case 0: mitAkarokSpawnolni = BushPrefab; break;
+            case 1: mitAkarokSpawnolni = TreePrefab; break;
+            case 2: mitAkarokSpawnolni = MousePrefab; break;
+            case 3: mitAkarokSpawnolni = WormPrefab; break;
+            default: break;
+        }
+
         //GameObject go = Instantiate(mitAkarokSpawnolni, Vector3.zero, Quaternion.identity);
         Vector3 newPos = new Vector3(transform.position.x, transform.position.y, 0);
         GameObject go = Instantiate(mitAkarokSpawnolni, newPos, Quaternion.identity);
