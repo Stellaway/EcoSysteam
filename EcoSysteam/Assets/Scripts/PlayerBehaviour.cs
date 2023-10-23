@@ -1,17 +1,88 @@
+using System.Collections.Generic;
 using Unity.Netcode;
 using UnityEngine;
 
 public class PlayerBehaviour : Synchronizable
 {
+    public static int STARTINGMAXHEALTH = 100;
+    public static int STARTINGSENSORDISTANCE = 10; //??? majd kitaláljuk mennyi
+
+    private int Hunger { get; set; } = 0;
+    private int Health { get; set; } = STARTINGMAXHEALTH;
+    private int MaxHealth { get; set; } = STARTINGMAXHEALTH;
+
+    private int SensorDistance { get; set; } = STARTINGSENSORDISTANCE;
+
+    private IAdvertiser.Intent? CurrentIntent { get; set; } = null;
+    
+    //TODO ez csak ideiglenesen van itt
+    private GameObject currTarget {  get; set; }
+
+
+
     // This method will be called every frame on the server side
     protected override void ServerUpdate() {
         // TODO itt kell varázsolni az új pozíció kiszámításához
+        Act();
+
+        
+
+        
+    }
+
+    // visszaadja az érzékelt gameobjectecet, azoknak a collider-ét használva
+    private List<GameObject> getNearGameObjects()
+    {
+        var list = new List<GameObject>();
+
+        Collider[] colliders = Physics.OverlapSphere(transform.position, SensorDistance);
+
+        foreach (Collider collider in colliders)
+        {
+            list.Add(collider.gameObject);
+        }
+
+        return list;
+    }
+
+    // Kőkorszaki egyszerűségű döntő script
+    private void Evaluate(GameObject gameObject)
+    {
+        if(currTarget != null)
+        {
+            //choose closest object
+            if ((this.transform.position -  currTarget.transform.position).sqrMagnitude > (this.transform.position - gameObject.transform.position).sqrMagnitude) {
+                currTarget = gameObject;
+            }
+        } else
+        {
+            currTarget = gameObject;
+        }
+    }
+
+    // Megnézi a környezetet és beforog a megfelelő irányba
+    // Lép a megfelelő irányba
+
+    //TODO Valahogy tag-ekből kivadászni minden prefabnak egy "advertisement scriptet" és akkor onnan meg lehet szerezni az intentet
+    private void Act()
+    {
+        var nearGameObjects = getNearGameObjects();
+
+
+        foreach (var nearGameObject in nearGameObjects)
+        {
+            Evaluate(nearGameObject);
+        }
+        
+
+
+
 
         // így el lehet érni az éppen aktuális pozíciót
         // transform.position.z == 0.0f, sztem szerencsésebb Vector2-t használni
         Vector2 currentPos = new Vector2(transform.position.x, transform.position.y);
-        Vector2 speed = new Vector2(2, 0); // pixel / sec
-        // előző frissítés óta eltelt idő (HASZNÁLJÁTOK PLS, HOGY FPS-FÜGGETLEN LEGYEN):
+        Vector2 speed = (currTarget.transform.position - this.transform.position).normalized * 2; // pixel / sec
+        // előző frissítés óta etlelt idő (HASZNÁLJÁTOK PLS, HOGY FPS-FÜGGETLEN LEGYEN):
         float delta = Time.deltaTime; // másodpercben
         // ez itt egy egyenes vonalú egyenletes mozgás
         Vector2 newPos = currentPos + speed * delta;
@@ -42,7 +113,6 @@ public class PlayerBehaviour : Synchronizable
     }
 
     private void MoveServer() {
-        spawnTest();
         UpdatePosition(new Vector2(Random.Range(-3f, 3f), Random.Range(-3f, 3f)));
     }
 
@@ -75,5 +145,10 @@ public class PlayerBehaviour : Synchronizable
         Vector3 newPos = new Vector3(transform.position.x, transform.position.y, 0);
         GameObject go = Instantiate(mitAkarokSpawnolni, newPos, Quaternion.identity);
         go.GetComponent<NetworkObject>().Spawn();
+    }
+
+     override public List<IAdvertiser.Intent> GetAdverisement()
+    {
+        throw new System.NotImplementedException();
     }
 }
