@@ -40,3 +40,5 @@ perpillanat annyi a demo "ai"-ja a dolognak, hogy:
 
 - játékos jobbra megy folyamatosan, gomb megnyomásakor (már csak az a játékos, amelyik a gombját megnyomta) leidéz egy random dolgot, majd elteleportál egy random helyre
 
+- JELENLEG NEM FOG ÍGY LEFUTNI, kell hozzáadni collidereket, de leginkább újragondolni az egészet...
+
