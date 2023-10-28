@@ -5,7 +5,7 @@ using UnityEngine;
 // ÚJRAGONDOLANDÓ, INKÁBB NETWORKTRANSFORM-OT HASZNÁLUNK, MERT TUDJA AZ INTERPOLÁCIÓT
 // LETÖRLENDŐ, EGYELŐRE (amennyiben később sem találunk neki hasznot)
 // Base class for classes that need to update their position across the network
-public abstract class Synchronizable : NetworkBehaviour, IAdvertiser
+public abstract class Synchronizable : NetworkBehaviour
 {
     // This variable can be written from the server side, and can be read from everywhere
     //private NetworkVariable<Vector2> NetPosition = new NetworkVariable<Vector2>();
@@ -29,8 +29,5 @@ public abstract class Synchronizable : NetworkBehaviour, IAdvertiser
         //transform.position = new Vector3(NetPosition.Value.x, NetPosition.Value.y, 0.0f);
     }
 
-    virtual public List<IAdvertiser.Intent> GetAdverisement()
-    {
-        return new List<IAdvertiser.Intent>();
-    }
+   
 }

@@ -13,6 +13,8 @@ GameObject:
   - component: {fileID: 8185277042357659008}
   - component: {fileID: 699512967077835437}
   - component: {fileID: -7682182168385630492}
+  - component: {fileID: 285347552624120410}
+  - component: {fileID: -4456857599475784568}
   m_Layer: 0
   m_Name: Player
   m_TagString: Advertiser
@@ -153,3 +155,29 @@ MonoBehaviour:
   InLocalSpace: 0
   Interpolate: 1
   SlerpPosition: 0
+--- !u!114 &285347552624120410
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1800321779586059776}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 673e796025f6aa943820b6bc17dcbd05, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _DisplayName: Monster
+--- !u!114 &-4456857599475784568
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1800321779586059776}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 034a871ccf2312f40bb7eee66cc6a7cc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _DisplayName: Harm
