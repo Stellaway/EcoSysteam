@@ -13,9 +13,10 @@ GameObject:
   - component: {fileID: 2695084927994076655}
   - component: {fileID: 8361572440240059416}
   - component: {fileID: 3146488941828703354}
+  - component: {fileID: -2867927044274075411}
   m_Layer: 0
   m_Name: Mouse
-  m_TagString: Untagged
+  m_TagString: Advertiser
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -150,3 +151,16 @@ MonoBehaviour:
   InLocalSpace: 0
   Interpolate: 1
   SlerpPosition: 0
+--- !u!114 &-2867927044274075411
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6780548180231784117}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 673e796025f6aa943820b6bc17dcbd05, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _DisplayName: Mouse
