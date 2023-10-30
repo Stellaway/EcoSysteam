@@ -18,6 +18,7 @@ public class PlayerBehaviour : Synchronizable
     private int health = 100;
     private int hunger = 0;
     private bool alive = true;
+    private float speed = 1.0f;
 
     private double viewAngle = 120;
 
@@ -47,11 +48,11 @@ public class PlayerBehaviour : Synchronizable
         // így el lehet érni az éppen aktuális pozíciót
         // transform.position.z == 0.0f, sztem szerencsésebb Vector2-t használni
         Vector2 currentPos = new Vector2(transform.position.x, transform.position.y);
-        Vector2 speed = direction; // pixel / sec
+        Vector2 velocity = direction * this.speed; // pixel / sec
         // előző frissítés óta eltelt idő (HASZNÁLJÁTOK PLS, HOGY FPS-FÜGGETLEN LEGYEN):
         float delta = Time.deltaTime; // másodpercben
         // ez itt egy egyenes vonalú egyenletes mozgás
-        Vector2 newPos = currentPos + speed * delta;
+        Vector2 newPos = currentPos + velocity * delta;
 
         //határon belül marad
         newPos.x = Mathf.Clamp(newPos.x, -7f, 7f);
