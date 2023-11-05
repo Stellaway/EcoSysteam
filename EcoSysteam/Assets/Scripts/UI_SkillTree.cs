@@ -26,4 +26,29 @@ public class UI_SkillTree : MonoBehaviour
         Debug.Log("Speed$$$");
         getOwnedSkillTree().UpgradeSpeed();
     }
+    
+    public void DistanceButton()
+    {
+        Debug.Log("Distance++");
+    }
+
+    public void SharpTeethButton()
+    {
+
+    }
+
+    public void GastricAcidButton()
+    {
+
+    }
+
+    public void ClawsButton()
+    {
+
+    }
+
+    public void CarnivoreButton()
+    {
+
+    }
 }
