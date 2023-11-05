@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using Unity.Netcode;
 using UnityEngine;
 
@@ -27,4 +28,6 @@ public abstract class Synchronizable : NetworkBehaviour
         // including on the server, the owner, and every other client as well
         //transform.position = new Vector3(NetPosition.Value.x, NetPosition.Value.y, 0.0f);
     }
+
+   
 }

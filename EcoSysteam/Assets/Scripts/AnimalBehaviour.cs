@@ -1,3 +1,4 @@
+using System;
 using Unity.Netcode;
 using UnityEngine;
 
@@ -20,15 +21,21 @@ public class AnimalBehaviour : Synchronizable
         Vector2 currentPos = new Vector2(transform.position.x, transform.position.y);
         Vector2 playerPos = new Vector2(connectedPlayer.transform.position.x, connectedPlayer.transform.position.y);
         // ebbe az irányba szeretnénk menni
-        Vector2 dir = playerPos - currentPos;
+        Vector2 dir = -(playerPos - currentPos);
         dir.Normalize();
         // előző frissítés óta eltelt idő (HASZNÁLJÁTOK PLS, HOGY FPS-FÜGGETLEN LEGYEN):
         float delta = Time.deltaTime; // másodpercben
         // a játékos felé történő mozgás
         Vector2 newPos = currentPos + dir * speed * delta;
         // elküldjük a hálózaton az új pozíciót (TODO ez lehet majd változik)
-        UpdatePosition(newPos);
+        UpdatePosition(PlayerScarilyCloseTest()?transform.position:newPos);
     }
+
+    private bool PlayerScarilyCloseTest()
+    {
+        return (connectedPlayer.transform.position - transform.position).magnitude > 3;
+    }
+
     public override void OnNetworkSpawn() {
         // valahogyan szerzünk egy referenciát
         // (itt most a spawnoláskor legközelebbi játékost célzom meg)

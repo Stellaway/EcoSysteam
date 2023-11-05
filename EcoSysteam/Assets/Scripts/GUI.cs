@@ -1,6 +1,7 @@
 // Source: https://docs-multiplayer.unity3d.com/netcode/current/tutorials/get-started-ngo/
 using Unity.Netcode;
 using UnityEngine;
+using Unity.Netcode.Transports.UTP;
 
 public class GUI : MonoBehaviour
 {
@@ -21,11 +22,27 @@ public class GUI : MonoBehaviour
         GUILayout.EndArea();
     }
 
+    static string IP = "127.0.0.1";
+    static string Port = "7777";
+    
     static void StartButtons()
     {
+        IP = GUILayout.TextField(IP);//(IP, 15) for max length
+        Port = GUILayout.TextField(Port);
         if (GUILayout.Button("Host")) NetworkManager.Singleton.StartHost();
-        if (GUILayout.Button("Client")) NetworkManager.Singleton.StartClient();
+        if (GUILayout.Button("Client")) StartClient();
         if (GUILayout.Button("Server")) NetworkManager.Singleton.StartServer();
+    }
+
+    static void StartClient() {
+        // https://stackoverflow.com/questions/6727187/converting-a-string-to-a-short
+        ushort Port_sh;
+        if (!ushort.TryParse(Port, out Port_sh)) {
+            Port_sh = 7777;
+        }
+        // https://docs-multiplayer.unity3d.com/netcode/current/components/networkmanager/
+        NetworkManager.Singleton.GetComponent<UnityTransport>().SetConnectionData(IP, Port_sh);
+        NetworkManager.Singleton.StartClient();
     }
 
     static void StatusLabels()
@@ -36,6 +53,8 @@ public class GUI : MonoBehaviour
         GUILayout.Label("Transport: " +
             NetworkManager.Singleton.NetworkConfig.NetworkTransport.GetType().Name);
         GUILayout.Label("Mode: " + mode);
+        GUILayout.Label("IP: " + NetworkManager.Singleton.GetComponent<UnityTransport>().ConnectionData.Address);
+        GUILayout.Label("Port: " + NetworkManager.Singleton.GetComponent<UnityTransport>().ConnectionData.Port);
     }
 
     static void SubmitNewPosition()
@@ -50,8 +69,10 @@ public class GUI : MonoBehaviour
             else
             {
                 var playerObject = NetworkManager.Singleton.SpawnManager.GetLocalPlayerObject();
-                var player = playerObject.GetComponent<PlayerBehaviour>();
-                player.Move();
+                if (playerObject != null) {
+                    var player = playerObject.GetComponent<PlayerBehaviour>();
+                    player.Move();
+                }
             }
         }
     }
