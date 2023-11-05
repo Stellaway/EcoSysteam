@@ -15,17 +15,27 @@ public class PlayerBehaviour : Synchronizable
     protected BaseInteraction CurrentInteraction = null;
 
 
+    private int health = 100;
+    private int hunger = 0;
+    private bool alive = true;
+    private float speed = 1.0f;
+
+    private double viewAngle = 120;
+
     // This method will be called every frame on the server side
     protected override void ServerUpdate()
     {
+        if (health <= 0) alive = false;
+        else health -= hunger;
 
         //Ha épp tud csinálni valamit
         if (CurrentInteraction != null && closeEnoughtToInteract())
         {
             CurrentInteraction.Perform(this, OnInteractionFinished);
-        } else
+        }
+        else
         {
-            if(CurrentInteraction == null)
+            if (CurrentInteraction == null)
             {
                 PickRandomInteraction();
             }
@@ -35,17 +45,19 @@ public class PlayerBehaviour : Synchronizable
         //Beállítja magát a megfelelő irányba
         SetDirection();
 
-
-
-
         // így el lehet érni az éppen aktuális pozíciót
         // transform.position.z == 0.0f, sztem szerencsésebb Vector2-t használni
         Vector2 currentPos = new Vector2(transform.position.x, transform.position.y);
-        Vector2 speed = direction; // pixel / sec
+        Vector2 velocity = direction * this.speed; // pixel / sec
         // előző frissítés óta eltelt idő (HASZNÁLJÁTOK PLS, HOGY FPS-FÜGGETLEN LEGYEN):
         float delta = Time.deltaTime; // másodpercben
         // ez itt egy egyenes vonalú egyenletes mozgás
-        Vector2 newPos = currentPos + speed * delta;
+        Vector2 newPos = currentPos + velocity * delta;
+
+        //határon belül marad
+        newPos.x = Mathf.Clamp(newPos.x, -7f, 7f);
+        newPos.y = Mathf.Clamp(newPos.y, -3f, 3f);
+
         // elküldjük a hálózaton az új pozíciót (TODO ez lehet majd változik)
         UpdatePosition(newPos);
     }
@@ -91,7 +103,7 @@ public class PlayerBehaviour : Synchronizable
 
     private void SetDirection()
     {
-        if(CurrentInteraction == null)
+        if (CurrentInteraction == null)
         {
             direction = Vector2.zero;
         }
@@ -128,7 +140,8 @@ public class PlayerBehaviour : Synchronizable
             CurrentInteraction = selectedInteraction;
             SetDirection();
         }
-        if( selectedInteraction == null ) {
+        if (selectedInteraction == null)
+        {
             Debug.Log($"No available interactions at all :((");
         }
     }

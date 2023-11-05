@@ -10,6 +10,7 @@ public class AnimalBehaviour : Synchronizable
     // teszt, hogy hogy lehet kommunikálni
     private PlayerBehaviour connectedPlayer;
 
+
     // This method will be called every frame on the server side
     protected override void ServerUpdate() {
         // TODO itt kell varázsolni az új pozíció kiszámításához
@@ -27,6 +28,11 @@ public class AnimalBehaviour : Synchronizable
         float delta = Time.deltaTime; // másodpercben
         // a játékos felé történő mozgás
         Vector2 newPos = currentPos + dir * speed * delta;
+
+        //határon belül marad
+        newPos.x = Mathf.Clamp(newPos.x, -7f,7f);
+        newPos.y = Mathf.Clamp(newPos.y, -3f,3f);
+        
         // elküldjük a hálózaton az új pozíciót (TODO ez lehet majd változik)
         UpdatePosition(PlayerScarilyCloseTest()?transform.position:newPos);
     }
