@@ -36,6 +36,11 @@ public class GUI : MonoBehaviour
         GUILayout.Label("Transport: " +
             NetworkManager.Singleton.NetworkConfig.NetworkTransport.GetType().Name);
         GUILayout.Label("Mode: " + mode);
+
+        var playerObject = NetworkManager.Singleton.SpawnManager.GetLocalPlayerObject();
+        var player = playerObject.GetComponent<PlayerBehaviour>();
+        GUILayout.Label("HP: "+player.health);
+        GUILayout.Label("Hunger: " + player.hunger);
     }
 
     static void SubmitNewPosition()

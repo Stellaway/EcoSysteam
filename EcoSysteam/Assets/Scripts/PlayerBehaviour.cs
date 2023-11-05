@@ -12,11 +12,13 @@ public class PlayerBehaviour : Synchronizable
     //Az érzékenység, hogy mennyire kell közel menni
     public float viggleRoom = 0.5f;
 
+    private System.DateTime startTime= System.DateTime.UtcNow;
+
     protected BaseInteraction CurrentInteraction = null;
 
 
-    private int health = 100;
-    private int hunger = 0;
+    public float health = 100;
+    public float hunger = 0;
     private bool alive = true;
 
     private double viewAngle = 120;
@@ -24,8 +26,23 @@ public class PlayerBehaviour : Synchronizable
     // This method will be called every frame on the server side
     protected override void ServerUpdate()
     {
-        if (health <= 0) alive = false;
-        else health -= hunger;
+        if (health <= 0)
+        {
+            alive = false;
+            return;
+        }
+        else
+        {
+            System.TimeSpan ts = System.DateTime.UtcNow - startTime;
+            startTime = System.DateTime.UtcNow;
+            hunger += ts.Milliseconds/1000f;
+        }
+
+        //éhezés
+        if(alive && hunger>=health)
+        {
+            health--;
+        }
 
         //Ha épp tud csinálni valamit
         if (CurrentInteraction != null && closeEnoughtToInteract())
