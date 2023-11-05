@@ -179,6 +179,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _DisplayName: Harm
+  StatChanges:
+  - Type: 2
+    Value: 0
 --- !u!114 &292116323752342387
 MonoBehaviour:
   m_ObjectHideFlags: 0

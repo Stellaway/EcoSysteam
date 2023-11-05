@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using Unity.Netcode;
 using UnityEngine;
+using System.Linq;
 
 
 public class PlayerBehaviour : Synchronizable
@@ -15,18 +16,25 @@ public class PlayerBehaviour : Synchronizable
     protected BaseInteraction CurrentInteraction = null;
 
 
-    private int health = 100;
-    private int hunger = 0;
+    private float health = 100;
+    private float[] healthmultipliers = {0,0,-1,1}; //fruit, meat, danger, safety
+
+    private float hunger = 60;
+    private float[] hungermultipliers = {1,1,0,0};
+
+
     private bool alive = true;
     private float speed = 1.0f;
 
-    private double viewAngle = 120;
+    private float viewRadius = 4;
+
+
+    [SerializeField] protected float DefaultInteractionScore = 0f;
 
     // This method will be called every frame on the server side
     protected override void ServerUpdate()
     {
         if (health <= 0) alive = false;
-        else health -= hunger;
 
         //Ha épp tud csinálni valamit
         if (CurrentInteraction != null && closeEnoughtToInteract())
@@ -37,7 +45,7 @@ public class PlayerBehaviour : Synchronizable
         {
             if (CurrentInteraction == null)
             {
-                PickRandomInteraction();
+                PickBestInteraction();
             }
         }
 
@@ -62,11 +70,88 @@ public class PlayerBehaviour : Synchronizable
         // elküldjük a hálózaton az új pozíciót (TODO ez lehet majd változik)
         UpdatePosition(newPos);
     }
+    
+    class ScoredInteraction
+    {
+        public SmartObject TargetObject;
+        public BaseInteraction Interaction;
+        public float Score;
+
+    }
+
+
+    private void PickBestInteraction()
+    {
+        var scoredInteractions = new List<ScoredInteraction>();
+        //loop through all available objects
+        var availableObjects = SmartObjectManager.Instance.getSmartObjectsInRange(this.viewRadius, this.transform.position);
+        foreach (var availableObject in availableObjects)
+        {
+            //loop through all the interactions
+            foreach(var interaction in availableObject.Interactions)
+            {
+                if (!interaction.CanPerform())
+                {
+                    continue;
+                }
+
+                float score = ScoreInteraction(interaction);
+
+                scoredInteractions.Add(new ScoredInteraction()  {   Interaction = interaction,
+                                                                    Score = score,
+                                                                    TargetObject = availableObject
+                                                                });
+
+            }
+        }
+        if(scoredInteractions.Count == 0)
+        {
+            return;
+        }
+
+        //Ha többet akarnánk és onnan random választani, azt itt kéne, a mérete alapján indexelni, mondjuk a top3ból választani
+        var bestScoredInteraction = scoredInteractions.OrderByDescending(i => i.Score).ToList();
+        
+        //actually beállunk felé
+        CurrentInteraction = bestScoredInteraction[0].Interaction;
+        SetDirection();
+    }
+
+
+    private float ScoreInteraction(BaseInteraction interaction)
+    {
+        if(interaction.StatChanges.Length == 0)
+        {
+            return DefaultInteractionScore;
+        }
+
+        float score = 0f;
+        foreach(var change in interaction.StatChanges)
+        {
+            score += ScoreChange(change.Type, change.Value);
+        }
+
+
+        return score;
+
+    }
+
+    private float ScoreChange(EInteractionType type, float amount)
+    {
+        float currentHealth = this.health;
+        float currentHunger = this.hunger;
+
+        float healthchange = (this.health +amount * healthmultipliers[(int)type]) - currentHealth;
+        float hungerchange = (-1f)*((this.hunger - amount * hungermultipliers[(int)type]) - currentHunger);
+        
+        return healthchange+hungerchange;
+    }
 
     private void OnInteractionFinished(BaseInteraction interaction)
     {
+        CurrentInteraction.ApplyStatChanges(this);
         CurrentInteraction = null;
-        Debug.Log($"Finished interaction {interaction}");
+        Debug.Log($"Finished interaction {interaction}, current hunger: {this.hunger}");
     }
 
 
@@ -123,6 +208,17 @@ public class PlayerBehaviour : Synchronizable
     private bool closeEnoughtToInteract()
     {
         return distanceFromTarget <= viggleRoom;
+    }
+
+    public void UpdateIndividualStat(EInteractionType Interactiontype, float amount)
+    {
+        Debug.Log($"Stats are updating by {amount}");
+        this.health += amount * healthmultipliers[(int)Interactiontype];
+        this.hunger -= amount * hungermultipliers[(int)Interactiontype];
+        if (hunger < 0)
+        {
+            hunger = 0;
+        }
     }
 
     void PickRandomInteraction()

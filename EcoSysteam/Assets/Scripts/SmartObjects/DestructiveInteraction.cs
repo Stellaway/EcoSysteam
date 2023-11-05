@@ -3,19 +3,11 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
 
-using UnityEngine.UI;
-
-
-
-public class SimpleInteraction : BaseInteraction
+public class DestructiveInteraction : SimpleInteraction
 {
-    public override bool CanPerform()
-    {
-        return true;
-    }
-
     public override void Perform(PlayerBehaviour performer, UnityAction<BaseInteraction> onCompleted)
     {
-        onCompleted.Invoke(this);
+        base.Perform(performer, onCompleted);
+        Destroy(this.gameObject);
     }
 }

@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 440368580411315403}
   - component: {fileID: 8831646163680632012}
   - component: {fileID: -2831567778851092638}
-  - component: {fileID: -2300912500453872107}
+  - component: {fileID: -3100360916007992072}
   m_Layer: 0
   m_Name: Worm
   m_TagString: Advertiser
@@ -165,7 +165,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _DisplayName: Worm
---- !u!114 &-2300912500453872107
+--- !u!114 &-3100360916007992072
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -174,7 +174,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 5883219940119997895}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 034a871ccf2312f40bb7eee66cc6a7cc, type: 3}
+  m_Script: {fileID: 11500000, guid: d73fdfa67d464784aa5887bcd5125305, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   _DisplayName: Eat Worm
+  _StatChanges:
+  - Type: 1
+    Value: 50
