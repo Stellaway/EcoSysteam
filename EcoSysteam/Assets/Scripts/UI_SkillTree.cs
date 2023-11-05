@@ -8,6 +8,13 @@ using UnityEngine;
 
 public class NewBehaviourScript : MonoBehaviour
 {
+    // visszaadhat nullt is ha még nem fut pl a játék!
+    private PlayerSkillTree getOwnedSkillTree() {
+        var playerObject = NetworkManager.Singleton.SpawnManager.GetLocalPlayerObject();
+        if (playerObject == null)
+            return null;
+        return playerObject.GetComponent<PlayerSkillTree>();
+    }
 
     public void HealthButton()
     {
@@ -17,5 +24,6 @@ public class NewBehaviourScript : MonoBehaviour
     public void SpeedButton()
     {
         Debug.Log("Speed$$$");
+        getOwnedSkillTree().UpgradeSpeed();
     }
 }

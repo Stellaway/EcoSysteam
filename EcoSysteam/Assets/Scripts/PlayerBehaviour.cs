@@ -48,7 +48,8 @@ public class PlayerBehaviour : Synchronizable
         // így el lehet érni az éppen aktuális pozíciót
         // transform.position.z == 0.0f, sztem szerencsésebb Vector2-t használni
         Vector2 currentPos = new Vector2(transform.position.x, transform.position.y);
-        Vector2 velocity = direction * this.speed; // pixel / sec
+        float multiplier = GetComponent<PlayerSkillTree>().GetSpeed() ? 3 : 1; // fejlesztés
+        Vector2 velocity = direction * this.speed * multiplier; // pixel / sec
         // előző frissítés óta eltelt idő (HASZNÁLJÁTOK PLS, HOGY FPS-FÜGGETLEN LEGYEN):
         float delta = Time.deltaTime; // másodpercben
         // ez itt egy egyenes vonalú egyenletes mozgás

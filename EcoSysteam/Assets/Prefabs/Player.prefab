@@ -15,6 +15,7 @@ GameObject:
   - component: {fileID: -7682182168385630492}
   - component: {fileID: 285347552624120410}
   - component: {fileID: -4456857599475784568}
+  - component: {fileID: 292116323752342387}
   m_Layer: 0
   m_Name: Player
   m_TagString: Advertiser
@@ -121,10 +122,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c097a59d4d063fb3cb8647e694be953a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  BushPrefab: {fileID: 8393226344324705955, guid: 89361de39a6936793ae94d4d599690ee, type: 3}
-  TreePrefab: {fileID: 7559102107768517800, guid: 56bcdea08cad0c4f1a5a56e4eba7342b, type: 3}
-  MousePrefab: {fileID: 6780548180231784117, guid: 15c5748227a54efd9afc873df64e6e25, type: 3}
-  WormPrefab: {fileID: 5883219940119997895, guid: b9a95b014ff8deca097bc2852ce4881a, type: 3}
+  viggleRoom: 0.5
 --- !u!114 &-7682182168385630492
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -181,3 +179,15 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _DisplayName: Harm
+--- !u!114 &292116323752342387
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1800321779586059776}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 063bb9fa69a53ad0a97ab0ff91af87d4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
