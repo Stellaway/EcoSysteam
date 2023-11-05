@@ -146,3 +146,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _DisplayName: Eat Fruit
+  _StatChanges:
+  - Type: 0
+    Value: 25
+  - Type: 2
+    Value: 15

@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 6636592655632555341}
   - component: {fileID: 302206068056900281}
   - component: {fileID: 4916715542410365123}
+  - component: {fileID: 891585675453414330}
   m_Layer: 0
   m_Name: Bush
   m_TagString: Advertiser
@@ -118,3 +119,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9113dc0a2815b1e4e817d9748efdd53a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &891585675453414330
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8393226344324705955}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 034a871ccf2312f40bb7eee66cc6a7cc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _DisplayName: Hide
+  StatChanges:
+  - type: 3
+    value: 100

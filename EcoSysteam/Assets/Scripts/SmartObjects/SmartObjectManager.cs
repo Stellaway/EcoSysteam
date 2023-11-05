@@ -42,4 +42,19 @@ public class SmartObjectManager : MonoBehaviour
     {
         RegisteredObjects.Remove(toDeregister);
     }
+
+
+    public List<SmartObject> getSmartObjectsInRange(float range, Vector3 callerPostition)
+    {
+        var result = new List<SmartObject>();
+        foreach (SmartObject obj in RegisteredObjects)
+        {
+            if((obj.transform.position - callerPostition).magnitude < range)
+            {
+                result.Add(obj);
+            }
+        }
+
+        return result;
+    }
 }
