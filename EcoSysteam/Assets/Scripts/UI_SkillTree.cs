@@ -6,7 +6,7 @@ using Unity.Netcode;
 using UnityEngine;
 
 
-public class NewBehaviourScript : MonoBehaviour
+public class UI_SkillTree : MonoBehaviour
 {
     // visszaadhat nullt is ha még nem fut pl a játék!
     private PlayerSkillTree getOwnedSkillTree() {
