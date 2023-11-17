@@ -15,7 +15,7 @@ public class PlayerBehaviour : Synchronizable
 
     protected BaseInteraction CurrentInteraction = null;
 
-
+    private float maxhealth = 100; // a skilltree ezt állítja
     private float health = 100;
     private float[] healthmultipliers = {0,0,-1,1}; //fruit, meat, danger, safety
 
@@ -28,12 +28,31 @@ public class PlayerBehaviour : Synchronizable
 
     private float viewRadius = 4;
 
+    // nő mindenfélétől, és ha eléri 1-et, visszaugrik 0-ra, és egy skill point elérhető
+    private float upgradeProgress = 0.0f;
 
     [SerializeField] protected float DefaultInteractionScore = 0f;
 
     // This method will be called every frame on the server side
     protected override void ServerUpdate()
     {
+        // TODO, most idővel adjuk a skillpointot
+        upgradeProgress += Time.deltaTime / 5.0f; // 5s-enként kap egyet
+        if (upgradeProgress >= 1.0f) {
+            upgradeProgress -= 1.0f;
+            GetComponent<PlayerSkillTree>().AddSkillPoint();
+        }
+
+        // attribútumok frissítése a PlayerSkillTree-ből, nem a legszebb pollozni
+        speed = GetComponent<PlayerSkillTree>().GetSpeed();
+        viewRadius = GetComponent<PlayerSkillTree>().GetViewDistance();
+        float prevMaxHealth = maxhealth;
+        maxhealth = GetComponent<PlayerSkillTree>().GetHealth();
+        health += (maxhealth - prevMaxHealth);
+        if (health > maxhealth)
+            health = maxhealth;
+        Debug.Log(GetComponent<PlayerSkillTree>().GetFoodChainPosition()); // TODO felhasználni
+
         if (health <= 0) alive = false;
 
         //Ha épp tud csinálni valamit
@@ -56,8 +75,7 @@ public class PlayerBehaviour : Synchronizable
         // így el lehet érni az éppen aktuális pozíciót
         // transform.position.z == 0.0f, sztem szerencsésebb Vector2-t használni
         Vector2 currentPos = new Vector2(transform.position.x, transform.position.y);
-        float multiplier = GetComponent<PlayerSkillTree>().GetSpeed() ? 3 : 1; // fejlesztés
-        Vector2 velocity = direction * this.speed * multiplier; // pixel / sec
+        Vector2 velocity = direction * this.speed; // pixel / sec
         // előző frissítés óta eltelt idő (HASZNÁLJÁTOK PLS, HOGY FPS-FÜGGETLEN LEGYEN):
         float delta = Time.deltaTime; // másodpercben
         // ez itt egy egyenes vonalú egyenletes mozgás

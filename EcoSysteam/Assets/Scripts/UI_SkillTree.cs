@@ -9,7 +9,9 @@ using UnityEngine;
 public class UI_SkillTree : MonoBehaviour
 {
     // visszaadhat nullt is ha még nem fut pl a játék!
-    private PlayerSkillTree getOwnedSkillTree() {
+    public static PlayerSkillTree getOwnedSkillTree() {
+        if (NetworkManager.Singleton.SpawnManager == null)
+            return null;
         var playerObject = NetworkManager.Singleton.SpawnManager.GetLocalPlayerObject();
         if (playerObject == null)
             return null;
@@ -19,6 +21,7 @@ public class UI_SkillTree : MonoBehaviour
     public void HealthButton()
     {
         Debug.Log("CLIKEQ");
+        getOwnedSkillTree().UpgradeHealth();
     }
 
     public void SpeedButton()
@@ -30,25 +33,30 @@ public class UI_SkillTree : MonoBehaviour
     public void DistanceButton()
     {
         Debug.Log("Distance++");
+        getOwnedSkillTree().UpgradeViewDistance();
     }
 
     public void SharpTeethButton()
     {
-
+        getOwnedSkillTree()
+            .UpgradeFoodChainPosition(PlayerSkillTree.FoodChainEnum.SharpTeeth);
     }
 
     public void GastricAcidButton()
     {
-
+        getOwnedSkillTree()
+            .UpgradeFoodChainPosition(PlayerSkillTree.FoodChainEnum.GastricAcid);
     }
 
     public void ClawsButton()
     {
-
+        getOwnedSkillTree()
+            .UpgradeFoodChainPosition(PlayerSkillTree.FoodChainEnum.Claws);
     }
 
     public void CarnivoreButton()
     {
-
+        getOwnedSkillTree()
+            .UpgradeFoodChainPosition(PlayerSkillTree.FoodChainEnum.Carnivore);
     }
 }

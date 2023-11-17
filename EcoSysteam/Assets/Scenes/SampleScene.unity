@@ -168,6 +168,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   skillUi: {fileID: 1178169789}
+  heartBtn: {fileID: 352276157}
+  speedBtn: {fileID: 225213740}
+  distanceBtn: {fileID: 252147794}
+  herbivoreBtn: {fileID: 1223540355}
+  sharpTeethBtn: {fileID: 1402485118}
+  gastricAcidBtn: {fileID: 1670924177}
+  clawsBtn: {fileID: 2109472969}
+  carnivoreBtn: {fileID: 2006728869}
 --- !u!1 &97418174
 GameObject:
   m_ObjectHideFlags: 0
