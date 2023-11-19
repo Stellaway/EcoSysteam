@@ -55,6 +55,11 @@ public class GUI : MonoBehaviour
         GUILayout.Label("Mode: " + mode);
         GUILayout.Label("IP: " + NetworkManager.Singleton.GetComponent<UnityTransport>().ConnectionData.Address);
         GUILayout.Label("Port: " + NetworkManager.Singleton.GetComponent<UnityTransport>().ConnectionData.Port);
+
+        /*var playerObject = NetworkManager.Singleton.SpawnManager.GetLocalPlayerObject();
+        var player = playerObject.GetComponent<PlayerBehaviour>();
+        GUILayout.Label("HP: " + player.health);
+        GUILayout.Label("Hunger: " + player.hunger);*/
     }
 
     static void SubmitNewPosition()
