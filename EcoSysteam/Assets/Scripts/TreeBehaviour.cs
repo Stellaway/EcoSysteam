@@ -10,7 +10,7 @@ public class TreeBehaviour : PlantBehaviour
     // Reference to the Prefab. Drag a Prefab into this field in the Inspector.
     public GameObject myPrefab;
 
-    private int timePeriodTillFruit=10000;
+    private int timePeriodTillFruit=5000;
     private int timeCounter = 0;
 
     // This method will be called every frame on the server side
