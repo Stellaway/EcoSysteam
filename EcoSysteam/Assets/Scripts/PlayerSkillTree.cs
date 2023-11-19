@@ -47,7 +47,7 @@ public class PlayerSkillTree : NetworkBehaviour
         ViewDistance.Value++;
         UsedSkillPoints++;
     }
-    public float GetViewDistance() => 4.0f + 3.0f * ViewDistance.Value;
+    public float GetViewDistance() => 6.0f + 3.0f * ViewDistance.Value;
     public bool IsViewDistanceUpgradeable() => SkillPoints.Value > UsedSkillPoints;
 
     // 0: növényevő, 1: SharpTeeth, 2: GastricAcid, 3: Claws, 4: Carnivore

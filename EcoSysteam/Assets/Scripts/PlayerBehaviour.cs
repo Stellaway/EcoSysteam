@@ -4,6 +4,7 @@ using UnityEngine;
 using System.Linq;
 
 
+
 public class PlayerBehaviour : Synchronizable
 {
 
@@ -20,7 +21,7 @@ public class PlayerBehaviour : Synchronizable
     private float[] healthmultipliers = {0,0,-1,1}; //fruit, meat, danger, safety
 
     private float hunger = 60;
-    private float[] hungermultipliers = {1,1,0,0};
+    private float[] hungermultipliers = {1,0,0,0};
 
 
     private bool alive = true;
@@ -51,7 +52,16 @@ public class PlayerBehaviour : Synchronizable
         health += (maxhealth - prevMaxHealth);
         if (health > maxhealth)
             health = maxhealth;
-        Debug.Log(GetComponent<PlayerSkillTree>().GetFoodChainPosition()); // TODO felhasználni
+        PlayerSkillTree.FoodChainEnum foodchainproduction = GetComponent<PlayerSkillTree>().GetFoodChainPosition();
+        switch (foodchainproduction)
+        {
+            case PlayerSkillTree.FoodChainEnum.Herbivore: break;
+            case PlayerSkillTree.FoodChainEnum.SharpTeeth: break;
+            case PlayerSkillTree.FoodChainEnum.GastricAcid:healthmultipliers[0] += 0.5f; healthmultipliers[1] += 0.5f; break;
+            case PlayerSkillTree.FoodChainEnum.Claws: break;
+            case PlayerSkillTree.FoodChainEnum.Carnivore: hungermultipliers[1] += 1f; break;
+
+        }
 
         if (health <= 0) alive = false;
 
