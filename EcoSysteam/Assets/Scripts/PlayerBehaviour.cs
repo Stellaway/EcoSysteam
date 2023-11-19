@@ -92,8 +92,8 @@ public class PlayerBehaviour : Synchronizable
         Vector2 newPos = currentPos + velocity * delta;
 
         //határon belül marad
-        newPos.x = Mathf.Clamp(newPos.x, -7f, 7f);
-        newPos.y = Mathf.Clamp(newPos.y, -3f, 3f);
+        newPos.x = Mathf.Clamp(newPos.x, -18f, 18f);
+        newPos.y = Mathf.Clamp(newPos.y, -8f, 8f);
 
         // elküldjük a hálózaton az új pozíciót (TODO ez lehet majd változik)
         UpdatePosition(newPos);

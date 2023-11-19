@@ -7,7 +7,10 @@ using UnityEngine;
 
 public class TreeBehaviour : PlantBehaviour
 {
-    private int timePeriodTillFruit;
+    // Reference to the Prefab. Drag a Prefab into this field in the Inspector.
+    public GameObject myPrefab;
+
+    private int timePeriodTillFruit=10000;
     private int timeCounter = 0;
 
     // This method will be called every frame on the server side
@@ -16,7 +19,7 @@ public class TreeBehaviour : PlantBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        
+
     }
 
     // Update is called once per frame
@@ -29,6 +32,9 @@ public class TreeBehaviour : PlantBehaviour
         else
         {
             //create fruit
+            // Instantiate at position (0, 0, 0) and zero rotation.
+            Instantiate(myPrefab, this.transform.position, Quaternion.identity);
+
             timeCounter = 0;
         }
     }

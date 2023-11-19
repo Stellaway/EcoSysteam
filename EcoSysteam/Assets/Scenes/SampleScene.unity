@@ -806,11 +806,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7011349313452602643, guid: b9a95b014ff8deca097bc2852ce4881a, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 0.26
+      value: 0.25
       objectReference: {fileID: 0}
     - target: {fileID: 7011349313452602643, guid: b9a95b014ff8deca097bc2852ce4881a, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -1.86
+      value: 2.6
       objectReference: {fileID: 0}
     - target: {fileID: 7011349313452602643, guid: b9a95b014ff8deca097bc2852ce4881a, type: 3}
       propertyPath: m_LocalPosition.z
@@ -3791,6 +3791,7 @@ MonoBehaviour:
   _musicSource: {fileID: 790276622}
   _deathEffectSource: {fileID: 2019330169}
   _spawnEffectSource: {fileID: 735079825}
+  Volume: 0.2
 --- !u!4 &2037785144
 Transform:
   m_ObjectHideFlags: 0
@@ -3894,7 +3895,6 @@ GameObject:
   m_Component:
   - component: {fileID: 2081812149}
   - component: {fileID: 2081812148}
-  - component: {fileID: 2081812147}
   m_Layer: 0
   m_Name: zold
   m_TagString: Untagged
@@ -3902,27 +3902,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!95 &2081812147
-Animator:
-  serializedVersion: 5
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2081812146}
-  m_Enabled: 1
-  m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: 3755ea3f229be4d4cbc724517b5a6b0a, type: 2}
-  m_CullingMode: 0
-  m_UpdateMode: 0
-  m_ApplyRootMotion: 0
-  m_LinearVelocityBlending: 0
-  m_StabilizeFeet: 0
-  m_WarningMessage: 
-  m_HasTransformHierarchy: 1
-  m_AllowConstantClipSamplingOptimization: 1
-  m_KeepAnimatorStateOnDisable: 0
-  m_WriteDefaultValuesOnDisable: 0
 --- !u!212 &2081812148
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -3984,8 +3963,8 @@ Transform:
   m_GameObject: {fileID: 2081812146}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 3.58, y: -3, z: 0}
-  m_LocalScale: {x: 0.35, y: 0.35, z: 3.4999995}
+  m_LocalPosition: {x: 11.9, y: 5.57, z: 0}
+  m_LocalScale: {x: 0.69197166, y: 0.54549545, z: 3.4999995}
   m_ConstrainProportionsScale: 1
   m_Children: []
   m_Father: {fileID: 0}
