@@ -5,7 +5,7 @@ using UnityEngine;
 public class AnimalBehaviour : Synchronizable
 {
     // inspectorban állítható:
-    public float speed;
+    public float speed=1;
 
     // teszt, hogy hogy lehet kommunikálni
     private PlayerBehaviour connectedPlayer;
