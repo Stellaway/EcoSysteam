@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using Unity.Netcode;
-
+using System;
 
 public class PlayerSkillTree : NetworkBehaviour
 {
@@ -13,7 +13,7 @@ public class PlayerSkillTree : NetworkBehaviour
     );
     public void AddSkillPoint() => SkillPoints.Value++; // csak a szerverről
     private int UsedSkillPoints = 0; // kliensen tartjuk számon, mivel a SkillPointsot csak a szerverről lehet frissíteni
-
+    
     private NetworkVariable<int> Speed = new NetworkVariable<int>(
         0,
         NetworkVariableReadPermission.Everyone,
@@ -23,7 +23,7 @@ public class PlayerSkillTree : NetworkBehaviour
         Speed.Value++;
         UsedSkillPoints++; // a gomb csak akkor engedélyezett, ha van elég skillpoint
     }
-    public float GetSpeed() => 1.0f + 0.8f * Speed.Value; // TODO itt kell majd balanszolni
+    public float GetSpeed() => 1.0f + 0.8f * (float)Math.Log10((Speed.Value+1)*10); // TODO itt kell majd balanszolni
     public bool IsSpeedUpgradeable() => SkillPoints.Value > UsedSkillPoints;
 
     private NetworkVariable<int> Health = new NetworkVariable<int>(
@@ -35,7 +35,7 @@ public class PlayerSkillTree : NetworkBehaviour
         Health.Value++;
         UsedSkillPoints++;
     }
-    public float GetHealth() => 100.0f + 50.0f * Health.Value;
+    public float GetHealth() => 100.0f + 50.0f * (float)Math.Log10((Health.Value+1)*10);
     public bool IsHealthUpgradeable() => SkillPoints.Value > UsedSkillPoints;
 
     private NetworkVariable<int> ViewDistance = new NetworkVariable<int>(
@@ -47,7 +47,7 @@ public class PlayerSkillTree : NetworkBehaviour
         ViewDistance.Value++;
         UsedSkillPoints++;
     }
-    public float GetViewDistance() => 6.0f + 3.0f * ViewDistance.Value;
+    public float GetViewDistance() => 6.0f + 3.0f * (float)Math.Log10((ViewDistance.Value+1)*10);
     public bool IsViewDistanceUpgradeable() => SkillPoints.Value > UsedSkillPoints;
 
     // 0: növényevő, 1: SharpTeeth, 2: GastricAcid, 3: Claws, 4: Carnivore
@@ -76,4 +76,19 @@ public class PlayerSkillTree : NetworkBehaviour
     public bool IsFoodChainUpgradeable(FoodChainEnum toPos)
         => SkillPoints.Value > UsedSkillPoints
         && FoodChainPosition.Value == (int)toPos - 1 && (int)toPos <= 4;
+
+    public int GetSpeedUpgrades()
+    {
+        return Speed.Value;
+    }
+
+    public int GetHealthUpgrades()
+    {
+        return Health.Value;
+    }
+
+    public int GetViewDistanceUpgrades()
+    {
+        return ViewDistance.Value;
+    }
 }

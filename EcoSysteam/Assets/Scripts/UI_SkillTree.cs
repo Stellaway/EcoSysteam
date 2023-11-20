@@ -20,19 +20,16 @@ public class UI_SkillTree : MonoBehaviour
 
     public void HealthButton()
     {
-        Debug.Log("CLIKEQ");
         getOwnedSkillTree().UpgradeHealth();
     }
 
     public void SpeedButton()
     {
-        Debug.Log("Speed$$$");
         getOwnedSkillTree().UpgradeSpeed();
     }
     
     public void DistanceButton()
     {
-        Debug.Log("Distance++");
         getOwnedSkillTree().UpgradeViewDistance();
     }
 
