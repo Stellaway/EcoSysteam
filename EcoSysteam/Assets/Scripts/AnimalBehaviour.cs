@@ -36,7 +36,7 @@ public class AnimalBehaviour : Synchronizable
 
     private bool PlayerScarilyCloseTest()
     {
-        return (connectedPlayer.transform.position - transform.position).magnitude > 3;
+        return (connectedPlayer.transform.position - transform.position).magnitude < 1;
     }
 
     public override void OnNetworkSpawn() {
