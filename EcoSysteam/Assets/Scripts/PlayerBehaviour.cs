@@ -3,8 +3,6 @@ using Unity.Netcode;
 using UnityEngine;
 using System.Linq;
 
-
-
 public class PlayerBehaviour : Synchronizable
 {
 
@@ -84,6 +82,7 @@ public class PlayerBehaviour : Synchronizable
         {
             if (CurrentInteraction == null)
             {
+                Debug.Log($"Picking new Interaction, current interaction: {CurrentInteraction}, direction: {direction}, position: {transform.position}");
                 PickBestInteraction();
             }
         }
@@ -115,9 +114,11 @@ public class PlayerBehaviour : Synchronizable
         //Debug.Log($"Current Idle time = {currentIdleTime}");
         if(!IsAtDestination)
         {
-            UpdatePosition(newPos);
+            
         }
-        
+        Debug.Log($"I am moving to {newPos}");
+        UpdatePosition(newPos);
+
     }
     
     class ScoredInteraction
@@ -137,6 +138,7 @@ public class PlayerBehaviour : Synchronizable
 
         
         var availableObjects = SmartObjectManager.getInstance().getSmartObjectsInRange(this.viewRadius, this.transform.position);
+        Debug.Log($"Available objects: {availableObjects.Count}");
         foreach (var availableObject in availableObjects)
         {
             //loop through all the interactions
@@ -158,7 +160,7 @@ public class PlayerBehaviour : Synchronizable
         }
         if(scoredInteractions.Count == 0 || scoredInteractions.Sum(i => i.Score) == 0)
         {
-            Debug.Log("Nothing good to do");
+            //Debug.Log("Nothing good to do");
             is_idle = true;
             
             return;
@@ -271,9 +273,11 @@ public class PlayerBehaviour : Synchronizable
     {
         if (CurrentInteraction != null)        
         {
-            var dirVec3 = (CurrentInteraction.transform.position - transform.position).normalized;
-            direction = new Vector2(dirVec3.x, dirVec3.y);
-            distanceFromTarget = dirVec3.magnitude;
+            Debug.Log($"Currently chasing: {CurrentInteraction.DisplayName}, distance: {distanceFromTarget}");
+            var dirVec3 = (CurrentInteraction.transform.position - transform.position);
+            var dirVec2 = new Vector2(dirVec3.x, dirVec3.y);
+            direction = dirVec2.normalized;
+            distanceFromTarget = dirVec2.magnitude;
             //if (closeEnoughtToInteract())
             //{
             //    direction = Vector2.zero;

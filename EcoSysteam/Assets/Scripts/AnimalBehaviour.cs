@@ -30,13 +30,13 @@ public class AnimalBehaviour : Synchronizable
         Vector2 newPos = currentPos + dir * speed * delta;
 
         // elküldjük a hálózaton az új pozíciót (TODO ez lehet majd változik)
-        if (!PlayerScarilyCloseTest())
+        if (!PlayerScarilyCloseTestOrFarAf())
             UpdatePosition(newPos);
     }
 
-    private bool PlayerScarilyCloseTest()
+    private bool PlayerScarilyCloseTestOrFarAf()
     {
-        return (connectedPlayer.transform.position - transform.position).magnitude > 3;
+        return ((connectedPlayer.transform.position - transform.position).magnitude < 0.4) || ((connectedPlayer.transform.position - transform.position).magnitude > 7);
     }
 
     public override void OnNetworkSpawn() {
