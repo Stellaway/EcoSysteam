@@ -2,6 +2,7 @@
 using Unity.Netcode;
 using UnityEngine;
 using Unity.Netcode.Transports.UTP;
+using System.Net;
 
 public class GUI : MonoBehaviour
 {
@@ -40,8 +41,11 @@ public class GUI : MonoBehaviour
         if (!ushort.TryParse(Port, out Port_sh)) {
             Port_sh = 7777;
         }
+        // https://stackoverflow.com/questions/12756302/resolving-an-ip-address-from-dns-in-c-sharp
+        string resolvIP = Dns.GetHostAddresses(IP)[0].ToString();
+        Debug.Log($"Client connecting to {resolvIP}:{Port_sh}");
         // https://docs-multiplayer.unity3d.com/netcode/current/components/networkmanager/
-        NetworkManager.Singleton.GetComponent<UnityTransport>().SetConnectionData(IP, Port_sh);
+        NetworkManager.Singleton.GetComponent<UnityTransport>().SetConnectionData(resolvIP, Port_sh);
         NetworkManager.Singleton.StartClient();
     }
 
