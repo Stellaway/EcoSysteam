@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 8361572440240059416}
   - component: {fileID: 3146488941828703354}
   - component: {fileID: -2867927044274075411}
-  - component: {fileID: 3736850349525164648}
+  - component: {fileID: 6042010406859999378}
   m_Layer: 0
   m_Name: Mouse
   m_TagString: Advertiser
@@ -166,7 +166,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _DisplayName: Mouse
---- !u!114 &3736850349525164648
+--- !u!114 &6042010406859999378
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -175,10 +175,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 6780548180231784117}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 034a871ccf2312f40bb7eee66cc6a7cc, type: 3}
+  m_Script: {fileID: 11500000, guid: d73fdfa67d464784aa5887bcd5125305, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _DisplayName: Eat Mouse
+  _DisplayName: Eat mouse
   _StatChanges:
   - Type: 1
     Value: 60

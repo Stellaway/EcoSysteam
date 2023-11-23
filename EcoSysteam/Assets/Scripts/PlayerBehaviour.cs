@@ -13,6 +13,7 @@ public class PlayerBehaviour : Synchronizable
 
     //Az érzékenység, hogy mennyire kell közel menni
     public float viggleRoom = 0.5f;
+    private bool IsAtDestination = false;
 
     protected BaseInteraction CurrentInteraction = null;
 
@@ -33,6 +34,13 @@ public class PlayerBehaviour : Synchronizable
     private float upgradeProgress = 0.0f;
 
     [SerializeField] protected float DefaultInteractionScore = 0f;
+    
+
+    //If there was nothing good to do, move for a time in a random direction
+    private bool is_idle;
+    private float currentIdleTime = 0;
+
+    [SerializeField] protected float MaxIdleTime = 5f; //In sec
 
 
 
@@ -65,11 +73,11 @@ public class PlayerBehaviour : Synchronizable
 
         }
 
-        if (health <= 0) alive = false;
 
         //Ha épp tud csinálni valamit
         if (CurrentInteraction != null && closeEnoughtToInteract())
         {
+            IsAtDestination = true;
             CurrentInteraction.Perform(this, OnInteractionFinished);
         }
         else
@@ -80,9 +88,16 @@ public class PlayerBehaviour : Synchronizable
             }
         }
 
-
         //Beállítja magát a megfelelő irányba
-        SetDirection();
+        if (!is_idle)
+        {
+            SetDirectionToInteraction();
+        } else
+        {
+            Idle_Movement();
+        }
+        
+        
 
         // így el lehet érni az éppen aktuális pozíciót
         // transform.position.z == 0.0f, sztem szerencsésebb Vector2-t használni
@@ -94,7 +109,15 @@ public class PlayerBehaviour : Synchronizable
         Vector2 newPos = currentPos + velocity * delta;
 
         // elküldjük a hálózaton az új pozíciót (TODO ez lehet majd változik)
-        UpdatePosition(newPos);
+
+        //Debug.Log($"Current direction is: {direction}, current position: {transform.position}, new position: {newPos}");
+        //Debug.Log($"I am idle: {is_idle}");
+        //Debug.Log($"Current Idle time = {currentIdleTime}");
+        if(!IsAtDestination)
+        {
+            UpdatePosition(newPos);
+        }
+        
     }
     
     class ScoredInteraction
@@ -133,8 +156,11 @@ public class PlayerBehaviour : Synchronizable
 
             }
         }
-        if(scoredInteractions.Count == 0)
+        if(scoredInteractions.Count == 0 || scoredInteractions.Sum(i => i.Score) == 0)
         {
+            Debug.Log("Nothing good to do");
+            is_idle = true;
+            
             return;
         }
 
@@ -143,9 +169,34 @@ public class PlayerBehaviour : Synchronizable
         
         //actually beállunk felé
         CurrentInteraction = bestScoredInteraction[0].Interaction;
-        SetDirection();
+        IsAtDestination = false;
+        SetDirectionToInteraction();
     }
 
+    private void Idle_Movement()
+    {
+        if(currentIdleTime == 0)
+        {
+            var radius = 1;
+            Vector3 vec3 = Random.onUnitSphere * radius;
+            direction = new Vector2(vec3.x, vec3.y).normalized;
+        }
+        if (currentIdleTime >= MaxIdleTime)
+        {
+            is_idle = false;
+            currentIdleTime = 0;
+        } else
+        {
+            currentIdleTime += Time.deltaTime;
+        }
+
+
+        return;
+
+        
+
+
+    }
 
     private float ScoreInteraction(BaseInteraction interaction)
     {
@@ -216,21 +267,17 @@ public class PlayerBehaviour : Synchronizable
     }
 
 
-    private void SetDirection()
+    private void SetDirectionToInteraction()
     {
-        if (CurrentInteraction == null)
-        {
-            direction = Vector2.zero;
-        }
-        else
+        if (CurrentInteraction != null)        
         {
             var dirVec3 = (CurrentInteraction.transform.position - transform.position).normalized;
             direction = new Vector2(dirVec3.x, dirVec3.y);
             distanceFromTarget = dirVec3.magnitude;
-            if (closeEnoughtToInteract())
-            {
-                direction = Vector2.zero;
-            }
+            //if (closeEnoughtToInteract())
+            //{
+            //    direction = Vector2.zero;
+            //}
         }
     }
 
@@ -264,7 +311,7 @@ public class PlayerBehaviour : Synchronizable
         if (selectedInteraction.CanPerform())
         {
             CurrentInteraction = selectedInteraction;
-            SetDirection();
+            SetDirectionToInteraction();
         }
         if (selectedInteraction == null)
         {
