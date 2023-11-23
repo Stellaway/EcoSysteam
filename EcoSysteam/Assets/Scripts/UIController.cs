@@ -71,7 +71,7 @@ public class UIController : MonoBehaviour
             setButton(carnivoreBtn, st.IsFoodChainUpgradeable(PlayerSkillTree.FoodChainEnum.Carnivore));
 
 
-            nrOfSkillpoints.GetComponent<TextMeshPro>().text = st.GetUnusedSkillPoints().ToString();
+            nrOfSkillpoints.GetComponent<TextMeshProUGUI>().text = st.GetUnusedSkillPoints().ToString();
 
         }
     }
