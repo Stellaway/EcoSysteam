@@ -24,8 +24,10 @@ public class PlantBehaviour : Synchronizable
             Vector3 pos = this.transform.position;
             pos.y -= 4;
             var add = 1;
-            if (rnd.Next(1) == 0) add = -1;
+            if (rnd.Next(1) == 0) add *= -1;
             pos.x += add * rnd.Next(3);
+            if (rnd.Next(1) == 0) add *= -1;
+            pos.y += add * rnd.Next(5)*(float)0.33;
             GameObject go = Instantiate(myPrefab, pos, Quaternion.identity);
             go.GetComponent<NetworkObject>().Spawn(); // hogy mindenkin�l megjelenjen
 
