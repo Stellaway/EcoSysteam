@@ -74,16 +74,8 @@ public class GUI_lobby_temporary : NetworkBehaviour
             if (GUILayout.Button(NetworkManager.Singleton.IsServer ? "Start Game" : "Nemvagyokitt, nekattintside"))
             {
                 Debug.Log("Starting game!");
-                StartGameClientRpc();
-                if (!NetworkManager.Singleton.IsClient)
-                    SceneManager.LoadScene(1);
+                NetworkManager.SceneManager.LoadScene("SampleScene", LoadSceneMode.Single);
             }
         }
-    }
-    [ClientRpc]
-    void StartGameClientRpc()
-    {
-        Debug.Log($"Client Received Start signal");
-        SceneManager.LoadScene(1);
     }
 }
