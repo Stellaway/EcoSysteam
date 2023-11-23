@@ -29,12 +29,9 @@ public class AnimalBehaviour : Synchronizable
         // a játékos felé történő mozgás
         Vector2 newPos = currentPos + dir * speed * delta;
 
-        //határon belül marad
-        newPos.x = Mathf.Clamp(newPos.x, -7f,7f);
-        newPos.y = Mathf.Clamp(newPos.y, -3f,3f);
-        
         // elküldjük a hálózaton az új pozíciót (TODO ez lehet majd változik)
-        UpdatePosition(PlayerScarilyCloseTest()?transform.position:newPos);
+        if (!PlayerScarilyCloseTest())
+            UpdatePosition(newPos);
     }
 
     private bool PlayerScarilyCloseTest()
