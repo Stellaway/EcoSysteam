@@ -57,7 +57,7 @@ public class PlayerBehaviour : Synchronizable
         {
             case PlayerSkillTree.FoodChainEnum.Herbivore: break;
             case PlayerSkillTree.FoodChainEnum.SharpTeeth: break;
-            case PlayerSkillTree.FoodChainEnum.GastricAcid:healthmultipliers[0] += 0.5f; healthmultipliers[1] += 0.5f; break;
+            case PlayerSkillTree.FoodChainEnum.GastricAcid:healthmultipliers[0] += 0.5f; healthmultipliers[1] += 0.5f; break; // TODO ezt minden tickben hozzá kell adja?
             case PlayerSkillTree.FoodChainEnum.Claws: break;
             case PlayerSkillTree.FoodChainEnum.Carnivore: hungermultipliers[1] += 1f; break;
 
