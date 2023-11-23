@@ -3,9 +3,12 @@ using Unity.Netcode;
 using UnityEngine;
 using Unity.Netcode.Transports.UTP;
 using System.Net;
+using UnityEngine.UI;
 
 public class GUI : MonoBehaviour
 {
+
+
     private static bool visible = false;
     void Update()
     {
@@ -38,9 +41,29 @@ public class GUI : MonoBehaviour
     {
         IP = GUILayout.TextField(IP);//(IP, 15) for max length
         Port = GUILayout.TextField(Port);
-        if (GUILayout.Button("Host")) NetworkManager.Singleton.StartHost();
-        if (GUILayout.Button("Client")) StartClient();
-        if (GUILayout.Button("Server")) NetworkManager.Singleton.StartServer();
+        //var hostBtn = GUILayout.Button("Host");
+        //var clientBtn = GUILayout.Button("Client");
+        //var serverBtn = GUILayout.Button("Server");
+
+
+        //if (hostBtn) NetworkManager.Singleton.StartHost();
+        //if (clientBtn) StartClient();
+        //if (serverBtn) NetworkManager.Singleton.StartServer();
+    }
+
+    public void StartingHost()
+    {
+        NetworkManager.Singleton.StartHost();
+    }
+
+    public void StartingServer()
+    {
+        StartClient();
+    }
+
+    public void StartingClient()
+    {
+        NetworkManager.Singleton.StartServer();
     }
 
     static void StartClient() {

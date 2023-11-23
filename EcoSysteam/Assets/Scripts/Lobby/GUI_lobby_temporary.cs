@@ -4,9 +4,18 @@ using UnityEngine;
 using Unity.Netcode.Transports.UTP;
 using System.Net;
 using UnityEngine.SceneManagement;
+using UnityEngine.UIElements;
 
 public class GUI_lobby_temporary : NetworkBehaviour
 {
+    [SerializeField]
+    public GameObject hostBtn;
+
+    [SerializeField]
+    public GameObject serverBtn;
+
+    [SerializeField]
+    public GameObject clientBtn;
     void OnGUI()
     {
         GUILayout.BeginArea(new Rect(10, 10, 300, 300));
@@ -21,6 +30,7 @@ public class GUI_lobby_temporary : NetworkBehaviour
             SubmitNewPosition();
         }
 
+
         GUILayout.EndArea();
     }
 
@@ -31,9 +41,31 @@ public class GUI_lobby_temporary : NetworkBehaviour
     {
         IP = GUILayout.TextField(IP);//(IP, 15) for max length
         Port = GUILayout.TextField(Port);
-        if (GUILayout.Button("Host")) NetworkManager.Singleton.StartHost();
-        if (GUILayout.Button("Client")) StartClient();
-        if (GUILayout.Button("Server")) NetworkManager.Singleton.StartServer();
+        var hostBtn = GUILayout.Button("Host");
+        var clientBtn = GUILayout.Button("Client");
+        var serverBtn = GUILayout.Button("Server");
+
+
+        if (hostBtn) NetworkManager.Singleton.StartHost();
+        if (clientBtn) StartClient();
+        if (serverBtn) NetworkManager.Singleton.StartServer();
+    }
+
+    public static void StartingHost()
+    {
+        Debug.Log("AAAAAAAAAAAAA");
+        NetworkManager.Singleton.StartHost();
+    }
+
+    public static void StartingServer()
+    {
+        Debug.Log("AAAAAAAAAAAAA");
+        StartClient();
+    }
+
+    public static void StartingClient()
+    {Debug.Log("AAAAAAAAAAAAA");
+        NetworkManager.Singleton.StartServer();
     }
 
     static void StartClient() {
