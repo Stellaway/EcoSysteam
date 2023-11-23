@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Threading;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 //using UnityEngine.UIElements;
@@ -17,6 +18,7 @@ public class UIController : MonoBehaviour
     public GameObject gastricAcidBtn;
     public GameObject clawsBtn;
     public GameObject carnivoreBtn;
+    public GameObject nrOfSkillpoints;
 
     private Dictionary<Image, Color> originalColors = new Dictionary<Image, Color>();
 
@@ -44,6 +46,7 @@ public class UIController : MonoBehaviour
         PlayerSkillTree st = UI_SkillTree.getOwnedSkillTree();
         if (st != null)
         {
+
             // itt sem a legszebb pollozni
 
             setButton(heartBtn, st.IsHealthUpgradeable());
@@ -67,6 +70,9 @@ public class UIController : MonoBehaviour
             setButton(clawsBtn, st.IsFoodChainUpgradeable(PlayerSkillTree.FoodChainEnum.Claws));
 
             setButton(carnivoreBtn, st.IsFoodChainUpgradeable(PlayerSkillTree.FoodChainEnum.Carnivore));
+
+            //nrOfSkillpoints.GetComponent<TextMeshPro>().text = st.GetUnusedSkillPoints().ToString();
+
         }
     }
     
