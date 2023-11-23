@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using UnityEngine;
 using System;
 using Unity.Netcode;
-using UnityEngine;
 
 public class FruitBehaviour : PlantBehaviour
 {
