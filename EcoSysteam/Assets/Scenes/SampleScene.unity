@@ -999,6 +999,10 @@ PrefabInstance:
       propertyPath: m_ConstrainProportionsScale
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 4916715542410365123, guid: 89361de39a6936793ae94d4d599690ee, type: 3}
+      propertyPath: myPrefab
+      value: 
+      objectReference: {fileID: 0}
     - target: {fileID: 8393226344324705955, guid: 89361de39a6936793ae94d4d599690ee, type: 3}
       propertyPath: m_Name
       value: Bush (1)
@@ -1464,6 +1468,10 @@ PrefabInstance:
     - target: {fileID: 906542550311358727, guid: 89361de39a6936793ae94d4d599690ee, type: 3}
       propertyPath: m_ConstrainProportionsScale
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4916715542410365123, guid: 89361de39a6936793ae94d4d599690ee, type: 3}
+      propertyPath: myPrefab
+      value: 
       objectReference: {fileID: 0}
     - target: {fileID: 8393226344324705955, guid: 89361de39a6936793ae94d4d599690ee, type: 3}
       propertyPath: m_Name

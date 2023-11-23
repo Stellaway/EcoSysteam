@@ -8,6 +8,7 @@ public class PlantBehaviour : Synchronizable
 
     private float timePeriodTillFruit = 10;
     private float timeCounter = 0;
+    private System.Random rnd = new System.Random();
 
     // This method will be called every frame on the server side
     protected override void ServerUpdate()
@@ -22,6 +23,9 @@ public class PlantBehaviour : Synchronizable
             // Instantiate at position (0, 0, 0) and zero rotation.
             Vector3 pos = this.transform.position;
             pos.y -= 4;
+            var add = 1;
+            if (rnd.Next(1) == 0) add = -1;
+            pos.x += add * rnd.Next(3);
             GameObject go = Instantiate(myPrefab, pos, Quaternion.identity);
             go.GetComponent<NetworkObject>().Spawn(); // hogy mindenkin�l megjelenjen
 
