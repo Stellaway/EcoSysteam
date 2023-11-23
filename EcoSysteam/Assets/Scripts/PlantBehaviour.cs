@@ -20,7 +20,9 @@ public class PlantBehaviour : Synchronizable
         {
             //create fruit
             // Instantiate at position (0, 0, 0) and zero rotation.
-            GameObject go = Instantiate(myPrefab, this.transform.position, Quaternion.identity);
+            vec3 pos = this.transform.position;
+            pos.y -= 4;
+            GameObject go = Instantiate(myPrefab, pos, Quaternion.identity);
             go.GetComponent<NetworkObject>().Spawn(); // hogy mindenkin�l megjelenjen
 
             timeCounter = 0;
