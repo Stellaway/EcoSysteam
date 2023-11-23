@@ -23,7 +23,7 @@ public class UIController : MonoBehaviour
     void Start()
     {
         // Hide the UI element at the start
-        skillUi.SetActive(false);
+        skillUi.SetActive(true);
         saveColors(heartBtn);
         saveColors(speedBtn);
         saveColors(distanceBtn);

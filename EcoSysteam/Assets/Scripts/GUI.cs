@@ -6,8 +6,16 @@ using System.Net;
 
 public class GUI : MonoBehaviour
 {
+    private static bool visible = false;
+    void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.F5))
+            visible = !visible;
+    }
     void OnGUI()
     {
+        if (!visible)
+            return;
         GUILayout.BeginArea(new Rect(10, 10, 300, 300));
         if (!NetworkManager.Singleton.IsClient && !NetworkManager.Singleton.IsServer)
         {
