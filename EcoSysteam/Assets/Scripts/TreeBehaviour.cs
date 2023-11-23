@@ -17,7 +17,7 @@ public class TreeBehaviour : PlantBehaviour
         base.ServerUpdate();
         if(timeCounter < timePeriodTillFruit)
         {
-            timeCounter++;//ez így viszont sztem nem lesz fps-független, inkább a delta-t kéne összeadogatni
+            timeCounter++;//ez így viszont sztem nem lesz fps-független, inkább a Time.deltaTime-t kéne összeadogatni (float), másodpercben van elvileg
         }
         else
         {
@@ -39,6 +39,6 @@ public class TreeBehaviour : PlantBehaviour
     // Update is called once per frame
     void Update()
     {
-        //TODO ezt inkább a ServerUpdate-ben, hogy csak a szerver spawnoljon, és szinkronban maradjon a kliensekkel
+        // ezt inkább a ServerUpdate-ben, hogy csak a szerver spawnoljon, és szinkronban maradjon a kliensekkel
     }
 }
