@@ -46,7 +46,11 @@ public class UIController : MonoBehaviour
         PlayerSkillTree st = UI_SkillTree.getOwnedSkillTree();
         if (st != null)
         {
+<<<<<<< Updated upstream
 
+=======
+            Debug.Log("ASD");
+>>>>>>> Stashed changes
             // itt sem a legszebb pollozni
 
             setButton(heartBtn, st.IsHealthUpgradeable());
@@ -71,7 +75,11 @@ public class UIController : MonoBehaviour
 
             setButton(carnivoreBtn, st.IsFoodChainUpgradeable(PlayerSkillTree.FoodChainEnum.Carnivore));
 
+<<<<<<< Updated upstream
             //nrOfSkillpoints.GetComponent<TextMeshPro>().text = st.GetUnusedSkillPoints().ToString();
+=======
+            nrOfSkillpoints.GetComponent<TextMeshPro>().text = st.GetUnusedSkillPoints().ToString();
+>>>>>>> Stashed changes
 
         }
     }

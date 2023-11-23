@@ -91,4 +91,9 @@ public class PlayerSkillTree : NetworkBehaviour
     {
         return ViewDistance.Value;
     }
+    
+    public int GetUnusedSkillPoints()
+    {
+        return SkillPoints.Value - UsedSkillPoints;
+    }
 }
