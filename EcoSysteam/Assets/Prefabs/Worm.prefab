@@ -123,6 +123,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   speed: 0.3
+  childPrefab: {fileID: 5883219940119997895}
 --- !u!114 &8831646163680632012
 MonoBehaviour:
   m_ObjectHideFlags: 0
