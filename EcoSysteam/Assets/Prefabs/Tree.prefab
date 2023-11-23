@@ -13,7 +13,6 @@ GameObject:
   - component: {fileID: 7318155373224029549}
   - component: {fileID: 5332437562279054372}
   - component: {fileID: 18813589893363716}
-  - component: {fileID: -2587290554619450916}
   m_Layer: 0
   m_Name: Tree
   m_TagString: Advertiser
@@ -120,6 +119,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9113dc0a2815b1e4e817d9748efdd53a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  myPrefab: {fileID: 0}
 --- !u!114 &18813589893363716
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -133,21 +133,3 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _DisplayName: Tree
---- !u!114 &-2587290554619450916
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7559102107768517800}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 034a871ccf2312f40bb7eee66cc6a7cc, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _DisplayName: Eat Fruit
-  _StatChanges:
-  - Type: 0
-    Value: 25
-  - Type: 2
-    Value: 15

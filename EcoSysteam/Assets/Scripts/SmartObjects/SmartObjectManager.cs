@@ -19,6 +19,11 @@ public class SmartObjectManager : MonoBehaviour
         Instance = this;
     }
 
+    public static SmartObjectManager getInstance()
+    {
+        return Instance;
+    }
+
 
     // Start is called before the first frame update
     void Start()

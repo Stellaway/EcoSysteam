@@ -34,6 +34,8 @@ public class PlayerBehaviour : Synchronizable
 
     [SerializeField] protected float DefaultInteractionScore = 0f;
 
+
+
     // This method will be called every frame on the server side
     protected override void ServerUpdate()
     {
@@ -57,9 +59,9 @@ public class PlayerBehaviour : Synchronizable
         {
             case PlayerSkillTree.FoodChainEnum.Herbivore: break;
             case PlayerSkillTree.FoodChainEnum.SharpTeeth: break;
-            case PlayerSkillTree.FoodChainEnum.GastricAcid:healthmultipliers[0] += 0.5f; healthmultipliers[1] += 0.5f; break; // TODO ezt minden tickben hozzá kell adja?
+            case PlayerSkillTree.FoodChainEnum.GastricAcid:healthmultipliers[0] = 0.5f; healthmultipliers[1] = 0.5f; break;
             case PlayerSkillTree.FoodChainEnum.Claws: break;
-            case PlayerSkillTree.FoodChainEnum.Carnivore: hungermultipliers[1] += 1f; break;
+            case PlayerSkillTree.FoodChainEnum.Carnivore: hungermultipliers[1] = 1f; break;
 
         }
 
@@ -104,11 +106,14 @@ public class PlayerBehaviour : Synchronizable
     }
 
 
+
     private void PickBestInteraction()
     {
         var scoredInteractions = new List<ScoredInteraction>();
         //loop through all available objects
-        var availableObjects = SmartObjectManager.Instance.getSmartObjectsInRange(this.viewRadius, this.transform.position);
+
+        
+        var availableObjects = SmartObjectManager.getInstance().getSmartObjectsInRange(this.viewRadius, this.transform.position);
         foreach (var availableObject in availableObjects)
         {
             //loop through all the interactions
