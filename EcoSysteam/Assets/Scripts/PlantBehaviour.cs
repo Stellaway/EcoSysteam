@@ -4,7 +4,7 @@ using UnityEngine;
 public class PlantBehaviour : Synchronizable
 {
     // Reference to the Prefab. Drag a Prefab into this field in the Inspector.
-    public GameObject myPrefab;
+    public GameObject fruitPrefab;
 
     private float timePeriodTillFruit = 10;
     private float timeCounter = 0;
@@ -28,7 +28,7 @@ public class PlantBehaviour : Synchronizable
             pos.x += add * rnd.Next(3);
             if (rnd.Next(1) == 0) add *= -1;
             pos.y += add * rnd.Next(5)*(float)0.33;
-            GameObject go = Instantiate(myPrefab, pos, Quaternion.identity);
+            GameObject go = Instantiate(fruitPrefab, pos, Quaternion.identity);
             go.GetComponent<NetworkObject>().Spawn(); // hogy mindenkin�l megjelenjen
 
             timeCounter = 0;
