@@ -473,8 +473,8 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 1435488124}
-        m_TargetAssemblyTypeName: NewBehaviourScript, Assembly-CSharp
-        m_MethodName: HealthButton
+        m_TargetAssemblyTypeName: UI_SkillTree, Assembly-CSharp
+        m_MethodName: DistanceButton
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
