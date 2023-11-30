@@ -51,20 +51,19 @@ public class GUI_lobby_temporary : NetworkBehaviour
         if (serverBtn) NetworkManager.Singleton.StartServer();
     }
 
+    //kiszervezés a gombokhoz, hogyha a guin kívül csinálnánk
     public static void StartingHost()
     {
-        Debug.Log("AAAAAAAAAAAAA");
         NetworkManager.Singleton.StartHost();
     }
 
     public static void StartingServer()
     {
-        Debug.Log("AAAAAAAAAAAAA");
         StartClient();
     }
 
     public static void StartingClient()
-    {Debug.Log("AAAAAAAAAAAAA");
+    {
         NetworkManager.Singleton.StartServer();
     }
 
