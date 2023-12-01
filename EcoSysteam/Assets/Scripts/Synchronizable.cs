@@ -8,8 +8,8 @@ public abstract class Synchronizable : NetworkBehaviour
     // Must be called from the server side
     protected void UpdatePosition(Vector2 pos) {
         //határon belül marad
-        pos.x = Mathf.Clamp(pos.x, -18.5f, 18.5f);
-        pos.y = Mathf.Clamp(pos.y, -8.0f, 8.0f);
+        pos.x = Mathf.Clamp(pos.x, -15.1f, 15.1f);
+        pos.y = Mathf.Clamp(pos.y, -8.5f, 8.5f);
         transform.position = new Vector3(pos.x, pos.y, 0.0f);
     }
     // This method will be run from the server side, override it to implement the movement / action
