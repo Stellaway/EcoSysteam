@@ -8,27 +8,35 @@ As you start to play you can see a small ecosystem with players' creatures and t
 * Unity Netcode for GameObjects
 * Unity Transport
 
-# Információ kollaborátoroknak (by 1234ab)
-
-Előre sry, egy kicsit katyvasz, de remélem vannak benne hasznos infók.
+# Információ kollaborátoroknak (TODO: letörölni)
 
 Használt Unity verzió: 2022.3.10f1 (LTS)
 
-Lehet, hogy le kell tölteni 1-2 könyvtárat (pl netcode), ez nem tudom, mennyire automatikus, ki kell próbálni. Unity transport package-ből egy frissebbet szedtem le (2.1.0, 1.3.4 helyett, mert az kell elvileg a webes supporthoz), remélhetőleg nem romlik el emiatt.
-
-Direkt van egy mappával beljebb a projektmappa, mint mobweben, így talán jobb. Tettem bele egy unity-s gitignore-t, hogy ne commitoljunk feleslegesen olyan dolgokat, amiket generálni is lehet / platformfüggő.
+Egy mappával beljebb a projektmappa. Tettem bele egy unity-s gitignore-t, hogy ne commitoljunk feleslegesen olyan dolgokat, amiket generálni is lehet / platformfüggő.
 
 A scriptek helye a scripts mappa, a prefabok helye a prefabs mappa. Ezt javasolja a tutorial, mint unitys szokás.
 
-Az elnevezéseket próbáljuk konzisztensen tartani snake_case/camelCase/PascalCase/ilyesmi, végülis ez egy fancy projekt amit a végén leadunk xd. Hasonlóan a kódstílust, mindegy milyen, de legyen minél konzisztensebb (pl {} pozíciója).
+Synchronizable lett a közös ős neve végül, egyelőre. Ebből származik a PlayerBehaviour (valahogy ez a ...Behaviour a szokásos elnevezés, úgy tűnik).
 
-Synchronizable lett a közös ős neve végül, egyelőre. Ebből származik a PlayerBehaviour (valahogy ez a ...Behaviour a szokásos elnevezés, úgy tűnik). Próbáltam szépen kommentezni a kódot, ha valami nem világos, olvassátok el plíz :DD
-
-Újragondolva, perpillanat nem látom értelmét a közös ősnek, mert van egy komponens ami tökéletesen megcsinálja a transzform szinkronizációt, interpolációval meg mindennel, szóval azt használjuk most. Ugyanakkor nem töröltem még ki a Synchronizable-t, hátha később lesz értelme egy közös ősnek. De perpillanat letörlésre van ítélve szerintem.
-
-Amit majd ügyködni kell, az a PlayerBehaviour (illetve egyéb, AnimalBehaviour ill PlantBehaviour) ServerUpdate() függvénye. Itt kell kiszámolni az új pozíciót. Persze az még nem világos, hogy hogy fognak egymással kommunikálni az objektumok, illetve a spawnolás sem egyértelmű egyelőre.
+Amit majd ügyködni kell, az a PlayerBehaviour (illetve egyéb, AnimalBehaviour ill PlantBehaviour) ServerUpdate() függvénye. Itt kell kiszámolni az új pozíciót.
 
 Ha Unity-ben szeretnétek tesztelni, akkor a HOST gombot nyomjátok (miután elindítottátok a játékot): az szerver és kliens is egyben.
+
+# Hálózati megoldások dokumentálása
+
+## Felhasznált könyvtárak
+
+A projekt Unity Netcode for GameObjects 1.6.0-t használ, alatta pedig Unity Transport 2.1.0 van. Legalább UTP 2.0.0 kell, hogy a webes verzió is működjön.
+
+## Szinkronizáció
+
+Alapvetően a szerver oldalon történik minden lényegi számítás, majd ezt a kliensoldal megkapja, megjelenítés céljából. A pozíció szinkronizációjához az NGO beépített NetworkTransform komponensét használjuk, ez minden mozgó entitáson rajta van. A skill tree szinkronizációját NetworkVariable-ök végzik, a PlayerSkillTree scriptben.
+
+A játékos prefab tartalmazza az AI-t megvalósító PlayerBehaviour, illetve a PlayerSkillTree scriptet, és ezt a prefabot példányosítja a NetworkManager minden egyes kliens csatlakozásakor. Így lesz minden játékosnak hozzá tartozó skill tree-je. A fejlesztéseket kezelő GUI a klienshez tartozó player példány skill tree-jét módosítja, ami aztán a NetworkVariable segítségével megjelenik a szerveren is, és a player példányhoz tartozó PlayerBehaviour AI script a szerveren fel tudja használni a fejlesztett értékeket.
+
+## Lobby
+
+A játék indítása előtt egy lobby-ban lehet megvárni a játékosok csatlakozását, ekkor már felépül a kapcsolat. Majd a játék indításakor a NetworkManager SceneManager-e segítségével történik a játéknézet betöltése, minden kliensnél egyszerre, így kezdhető fair-en a játék.
 
 # Felhasznált források:
 
