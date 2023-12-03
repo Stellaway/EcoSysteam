@@ -20,7 +20,7 @@ public class PlayerBehaviour : Synchronizable
     private float health = 100;
     private float[] healthmultipliers = {0,0,-1,1}; //fruit, meat, danger, safety
 
-    private float hungergrowthrate = 10f;
+    private float hungergrowthrate = 5f;
     private float maxhunger = 200;
     private float hunger = 0;
     private float[] hungermultipliers = {1,0,0,0};
@@ -175,7 +175,7 @@ public class PlayerBehaviour : Synchronizable
     {
         if(hunger > health)
         {
-            health -= (hunger/health) *  Time.deltaTime; // balance
+            health -= (hunger-maxhealth + 1)/100 *  Time.deltaTime; // balance
             
             //Debug.Log($"Current HP: {health}");
         }
