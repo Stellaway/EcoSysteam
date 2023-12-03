@@ -19,6 +19,8 @@ public class UIController : MonoBehaviour
     public GameObject clawsBtn;
     public GameObject carnivoreBtn;
     public GameObject nrOfSkillpoints;
+    public GameObject nrOfHealth;
+    public GameObject nrOfHunger;
 
     private Dictionary<Image, Color> originalColors = new Dictionary<Image, Color>();
 
@@ -72,6 +74,8 @@ public class UIController : MonoBehaviour
 
 
             nrOfSkillpoints.GetComponent<TextMeshProUGUI>().text = st.GetUnusedSkillPoints().ToString();
+            nrOfHealth.GetComponent<TextMeshProUGUI>().text = st.GetHealth().ToString();
+            nrOfHunger.GetComponent<TextMeshProUGUI>().text = st.GetHealth().ToString();
 
         }
     }
