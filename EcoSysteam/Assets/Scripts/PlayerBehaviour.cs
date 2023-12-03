@@ -436,7 +436,7 @@ public class PlayerBehaviour : Synchronizable
             Move();
             //GetComponent<SpriteRenderer>().color = Color.yellow;
         } else
-            GetComponent<SpriteRenderer>().color = Color.green;
+            GetComponent<SpriteRenderer>().color = Color.yellow;
     }
 
     // Ask the server to place the bogyesz on a random position
