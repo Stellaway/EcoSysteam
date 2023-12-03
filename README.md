@@ -8,19 +8,19 @@ As you start to play you can see a small ecosystem with players' creatures and t
 * Unity Netcode for GameObjects
 * Unity Transport
 
-# Információ kollaborátoroknak (TODO: letörölni)
+# Projektinformációk
 
 Használt Unity verzió: 2022.3.10f1 (LTS)
 
-Egy mappával beljebb a projektmappa. Tettem bele egy unity-s gitignore-t, hogy ne commitoljunk feleslegesen olyan dolgokat, amiket generálni is lehet / platformfüggő.
+Egy mappával beljebb található a projektmappa. Van benne egy unity-s gitignore, hogy ne commitoljunk feleslegesen olyan dolgokat, amiket generálni is lehet / platformfüggő.
 
-A scriptek helye a scripts mappa, a prefabok helye a prefabs mappa. Ezt javasolja a tutorial, mint unitys szokás.
+A scriptek helye a scripts mappa, a prefabok helye a prefabs mappa.
 
-Synchronizable lett a közös ős neve végül, egyelőre. Ebből származik a PlayerBehaviour (valahogy ez a ...Behaviour a szokásos elnevezés, úgy tűnik).
+Synchronizable a közös őse a ...Behaviour-oknak. Ebből származik a PlayerBehaviour.
 
-Amit majd ügyködni kell, az a PlayerBehaviour (illetve egyéb, AnimalBehaviour ill PlantBehaviour) ServerUpdate() függvénye. Itt kell kiszámolni az új pozíciót.
+A Synchronizable-leszármazottak ServerUpdate() függvénye felel a mozgás megvalósításáért, itt kell kiszámolni az új pozíciót.
 
-Ha Unity-ben szeretnétek tesztelni, akkor a HOST gombot nyomjátok (miután elindítottátok a játékot): az szerver és kliens is egyben.
+A Unity-ben teszteléshez a HOST gombot kell megnyomni (miután elindult a játék): az szerver és kliens is egyben.
 
 # Hálózati megoldások dokumentálása
 
