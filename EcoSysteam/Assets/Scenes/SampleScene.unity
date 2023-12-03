@@ -236,7 +236,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: 9e56f41ccb6aa7741851e326ac566736, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 4f4918956eb84f64dbedf6102a82e707, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -257,7 +257,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0.5}
-  m_LocalScale: {x: 2.8, y: 2.8, z: 2.8}
+  m_LocalScale: {x: 1.8, y: 1.8, z: 1.8}
   m_ConstrainProportionsScale: 1
   m_Children: []
   m_Father: {fileID: 0}
@@ -2408,15 +2408,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7960379156482934475, guid: 56bcdea08cad0c4f1a5a56e4eba7342b, type: 3}
       propertyPath: m_LocalScale.x
-      value: 3
+      value: 1.2
       objectReference: {fileID: 0}
     - target: {fileID: 7960379156482934475, guid: 56bcdea08cad0c4f1a5a56e4eba7342b, type: 3}
       propertyPath: m_LocalScale.y
-      value: 3.0294762
+      value: 1.2117904
       objectReference: {fileID: 0}
     - target: {fileID: 7960379156482934475, guid: 56bcdea08cad0c4f1a5a56e4eba7342b, type: 3}
       propertyPath: m_LocalScale.z
-      value: 2.2251909
+      value: 0.89007634
       objectReference: {fileID: 0}
     - target: {fileID: 7960379156482934475, guid: 56bcdea08cad0c4f1a5a56e4eba7342b, type: 3}
       propertyPath: m_LocalPosition.x
@@ -2843,10 +2843,6 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 5332437562279054372, guid: 56bcdea08cad0c4f1a5a56e4eba7342b, type: 3}
-      propertyPath: myPrefab
-      value: 
-      objectReference: {fileID: 7559102107768517800, guid: 1286f6a5b9fbd464fabe972849f35adf, type: 3}
     - target: {fileID: 7318155373224029549, guid: 56bcdea08cad0c4f1a5a56e4eba7342b, type: 3}
       propertyPath: GlobalObjectIdHash
       value: 3611543542
@@ -2855,17 +2851,21 @@ PrefabInstance:
       propertyPath: m_Name
       value: Tree
       objectReference: {fileID: 0}
+    - target: {fileID: 7618251306889316632, guid: 56bcdea08cad0c4f1a5a56e4eba7342b, type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 21300000, guid: 3f77c83c7f5716a42816be497c861a7a, type: 3}
     - target: {fileID: 7960379156482934475, guid: 56bcdea08cad0c4f1a5a56e4eba7342b, type: 3}
       propertyPath: m_LocalScale.x
-      value: 2
+      value: 1.2
       objectReference: {fileID: 0}
     - target: {fileID: 7960379156482934475, guid: 56bcdea08cad0c4f1a5a56e4eba7342b, type: 3}
       propertyPath: m_LocalScale.y
-      value: 2
+      value: 1.2
       objectReference: {fileID: 0}
     - target: {fileID: 7960379156482934475, guid: 56bcdea08cad0c4f1a5a56e4eba7342b, type: 3}
       propertyPath: m_LocalScale.z
-      value: 2
+      value: 1.2
       objectReference: {fileID: 0}
     - target: {fileID: 7960379156482934475, guid: 56bcdea08cad0c4f1a5a56e4eba7342b, type: 3}
       propertyPath: m_LocalPosition.x

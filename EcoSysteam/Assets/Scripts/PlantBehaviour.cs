@@ -22,7 +22,7 @@ public class PlantBehaviour : Synchronizable
             //create fruit
             // Instantiate at position (0, 0, 0) and zero rotation.
             Vector3 pos = this.transform.position;
-            pos.y -= 4;
+            pos.y -= 5;
             var add = 1;
             if (rnd.Next(1) == 0) add *= -1;
             pos.x += add * rnd.Next(3);
