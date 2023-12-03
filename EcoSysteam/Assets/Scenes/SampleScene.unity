@@ -1462,6 +1462,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 440368580411315403, guid: b9a95b014ff8deca097bc2852ce4881a, type: 3}
+      propertyPath: childPrefab
+      value: 
+      objectReference: {fileID: 5883219940119997895, guid: b9a95b014ff8deca097bc2852ce4881a, type: 3}
     - target: {fileID: 5883219940119997895, guid: b9a95b014ff8deca097bc2852ce4881a, type: 3}
       propertyPath: m_Name
       value: Worm
