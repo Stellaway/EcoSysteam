@@ -62,6 +62,8 @@ public class AnimalBehaviour : Synchronizable
     private float timeCounter = 0;
     private System.Random rnd = new System.Random();
 
+    private static int maxSpawnedCount = 100;
+
     // This method will be called every frame on the server side
     protected void Reproduce()
     {
@@ -69,7 +71,7 @@ public class AnimalBehaviour : Synchronizable
         {
             timeCounter += Time.deltaTime;//ez �gy viszont sztem nem lesz fps-f�ggetlen, ink�bb a Time.deltaTime-t k�ne �sszeadogatni (float), m�sodpercben van elvileg
         }
-        else
+        else if (GameObject.FindGameObjectsWithTag("Advertiser").Length < maxSpawnedCount)
         {
             //create child
             // Instantiate at position (0, 0, 0) and zero rotation.
