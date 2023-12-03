@@ -319,7 +319,7 @@ public class PlayerBehaviour : Synchronizable
     {
         if (IsOwner) {
             Move();
-            GetComponent<SpriteRenderer>().color = Color.yellow;
+            //GetComponent<SpriteRenderer>().color = Color.yellow;
         }
     }
 
