@@ -6,7 +6,7 @@ public class PlantBehaviour : Synchronizable
     // Reference to the Prefab. Drag a Prefab into this field in the Inspector.
     public GameObject fruitPrefab;
 
-    private float timePeriodTillFruit = 10;
+    private float timePeriodTillFruit = 20;
     private float timeCounter = 0;
     private System.Random rnd = new System.Random();
 
