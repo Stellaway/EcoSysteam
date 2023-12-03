@@ -63,24 +63,7 @@ public class PlayerBehaviour : Synchronizable
             GetComponent<PlayerSkillTree>().AddSkillPoint();
         }
 
-        // attribútumok frissítése a PlayerSkillTree-ből, nem a legszebb pollozni
-        speed = GetComponent<PlayerSkillTree>().GetSpeed();
-        viewRadius = GetComponent<PlayerSkillTree>().GetViewDistance();
-        float prevMaxHealth = maxhealth;
-        maxhealth = GetComponent<PlayerSkillTree>().GetHealth();
-        health += (maxhealth - prevMaxHealth);
-        if (health > maxhealth)
-            health = maxhealth;
-        PlayerSkillTree.FoodChainEnum foodchainproduction = GetComponent<PlayerSkillTree>().GetFoodChainPosition();
-        switch (foodchainproduction)
-        {
-            case PlayerSkillTree.FoodChainEnum.Herbivore: break;
-            case PlayerSkillTree.FoodChainEnum.SharpTeeth: break;
-            case PlayerSkillTree.FoodChainEnum.GastricAcid:healthmultipliers[0] = 0.5f; healthmultipliers[1] = 0.5f; break;
-            case PlayerSkillTree.FoodChainEnum.Claws: break;
-            case PlayerSkillTree.FoodChainEnum.Carnivore: hungermultipliers[1] = 1f; break;
-
-        }
+        refresh_playerskilltree();
 
         //Get hungrier
         hungerchange();
@@ -142,6 +125,31 @@ public class PlayerBehaviour : Synchronizable
 
     }
 
+    private void refresh_playerskilltree() {
+
+        // attribútumok frissítése a PlayerSkillTree-ből, nem a legszebb pollozni
+        speed = GetComponent<PlayerSkillTree>().GetSpeed();
+        viewRadius = GetComponent<PlayerSkillTree>().GetViewDistance();
+        float prevMaxHealth = maxhealth;
+        maxhealth = GetComponent<PlayerSkillTree>().GetHealth();
+        health += (maxhealth - prevMaxHealth);
+        if (health > maxhealth)
+            health = maxhealth;
+        PlayerSkillTree.FoodChainEnum foodchainproduction = GetComponent<PlayerSkillTree>().GetFoodChainPosition();
+        switch (foodchainproduction)
+        {
+            case PlayerSkillTree.FoodChainEnum.Herbivore: break;
+            case PlayerSkillTree.FoodChainEnum.SharpTeeth: break;
+            case PlayerSkillTree.FoodChainEnum.GastricAcid:healthmultipliers[0] = 0.5f; healthmultipliers[1] = 0.5f; break;
+            case PlayerSkillTree.FoodChainEnum.Claws: break;
+            case PlayerSkillTree.FoodChainEnum.Carnivore: hungermultipliers[1] = 1f; break;
+
+        }
+
+        GetComponent<PlayerSkillTree>().UpdateCurrentHealth(health);
+        GetComponent<PlayerSkillTree>().UpdateCurrentHunger(hunger);
+    }
+
     private void starve_to_death()
     {
         if (health < 0) {
@@ -169,7 +177,7 @@ public class PlayerBehaviour : Synchronizable
         {
             health -= (hunger/health) *  Time.deltaTime; // balance
             
-            Debug.Log($"Current HP: {health}");
+            //Debug.Log($"Current HP: {health}");
         }
     }
 
@@ -179,7 +187,7 @@ public class PlayerBehaviour : Synchronizable
         {
             hunger += Time.deltaTime * hungergrowthrate; //balance
         }
-        Debug.Log($"Current Hunger:{hunger}");
+        //Debug.Log($"Current Hunger:{hunger}");
 
     }
 
@@ -311,7 +319,7 @@ public class PlayerBehaviour : Synchronizable
     {
         if (IsOwner) {
             Move();
-            //GetComponent<SpriteRenderer>().color = Color.blue;
+            GetComponent<SpriteRenderer>().color = Color.yellow;
         }
     }
 

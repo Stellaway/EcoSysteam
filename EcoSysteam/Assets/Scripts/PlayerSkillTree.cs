@@ -96,4 +96,21 @@ public class PlayerSkillTree : NetworkBehaviour
     {
         return SkillPoints.Value - UsedSkillPoints;
     }
+
+
+    // these are for display
+    private NetworkVariable<float> CurrentHealth = new NetworkVariable<float>(
+        0.0f,
+        NetworkVariableReadPermission.Everyone,
+        NetworkVariableWritePermission.Server
+    );
+    public void UpdateCurrentHealth(float v) => CurrentHealth.Value = v;
+    public int GetCurrentHealth() => (int)(CurrentHealth.Value + 0.5f);
+    private NetworkVariable<float> CurrentHunger = new NetworkVariable<float>(
+        0.0f,
+        NetworkVariableReadPermission.Everyone,
+        NetworkVariableWritePermission.Server
+    );
+    public void UpdateCurrentHunger(float v) => CurrentHunger.Value = v;
+    public int GetCurrentHunger() => (int)(CurrentHunger.Value + 0.5f);
 }

@@ -74,8 +74,8 @@ public class UIController : MonoBehaviour
 
 
             nrOfSkillpoints.GetComponent<TextMeshProUGUI>().text = st.GetUnusedSkillPoints().ToString();
-            nrOfHealth.GetComponent<TextMeshProUGUI>().text = st.GetHealth().ToString();
-            nrOfHunger.GetComponent<TextMeshProUGUI>().text = st.GetHealth().ToString();
+            nrOfHealth.GetComponent<TextMeshProUGUI>().text = st.GetCurrentHealth().ToString();
+            nrOfHunger.GetComponent<TextMeshProUGUI>().text = st.GetCurrentHunger().ToString();
 
         }
     }
