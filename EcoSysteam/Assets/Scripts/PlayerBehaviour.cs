@@ -6,6 +6,8 @@ using Unity.VisualScripting;
 
 public class PlayerBehaviour : Synchronizable
 {
+    public GameObject crownPrefab;
+    private GameObject crown;
 
     protected Vector2 direction = Vector2.zero;
     protected float distanceFromTarget = 0f;
@@ -50,11 +52,27 @@ public class PlayerBehaviour : Synchronizable
         isInLobby = false;
     }
 
+    private void createCrown()
+    {
+        Vector3 pos = this.transform.position;
+        pos.y += 2;
+        crown = Instantiate(crownPrefab, pos, Quaternion.identity);
+        crown.GetComponent<NetworkObject>().Spawn();
+    }
+
+    private void updateCrown()
+    {
+        crown.GetComponent<NetworkObject>().Despawn();
+        Vector3 pos = this.transform.position;
+        pos.y += 2;
+        crown = Instantiate(crownPrefab, pos, Quaternion.identity);
+        crown.GetComponent<NetworkObject>().Spawn();
+    }
+
     // This method will be called every frame on the server side
     protected override void ServerUpdate()
     {
-        
-        if(!alive || isInLobby) return;
+        if (!alive || isInLobby) return;
 
         // TODO, most idővel adjuk a skillpointot
         upgradeProgress += Time.deltaTime / 15.0f; // 5s-enként kap egyet
@@ -122,6 +140,8 @@ public class PlayerBehaviour : Synchronizable
         }
         //Debug.Log($"I am moving to {newPos}");
         UpdatePosition(newPos);
+        if(crown==null) createCrown();
+        updateCrown();
 
     }
 

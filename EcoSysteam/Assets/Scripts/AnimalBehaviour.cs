@@ -81,7 +81,7 @@ public class AnimalBehaviour : Synchronizable
     // Reference to the Prefab. Drag a Prefab into this field in the Inspector.
     public GameObject childPrefab;
 
-    private float timePeriodTillChild = 15;
+    private float timePeriodTillChild = 25;
     private float timeCounter = 0;
     private System.Random rnd = new System.Random();
 
