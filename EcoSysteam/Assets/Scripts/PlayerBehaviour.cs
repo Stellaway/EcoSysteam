@@ -154,7 +154,7 @@ public class PlayerBehaviour : Synchronizable
         //Debug.Log($"I am moving to {newPos}");
         UpdatePosition(newPos);
 
-        if (crown == null)
+        if (accessory == null)
         {
             
             int n=rnd.Next(3);
