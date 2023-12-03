@@ -7,7 +7,7 @@ using System;
 public class PlayerSkillTree : NetworkBehaviour
 {
     private NetworkVariable<int> SkillPoints = new NetworkVariable<int>(
-        0,
+        2,
         NetworkVariableReadPermission.Everyone,
         NetworkVariableWritePermission.Server
     );

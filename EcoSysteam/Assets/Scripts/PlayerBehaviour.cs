@@ -22,7 +22,7 @@ public class PlayerBehaviour : Synchronizable
 
     private float hungergrowthrate = 10f;
     private float maxhunger = 200;
-    private float hunger = 200;
+    private float hunger = 0;
     private float[] hungermultipliers = {1,0,0,0};
 
 
@@ -34,7 +34,7 @@ public class PlayerBehaviour : Synchronizable
     private float viewRadius = 4;
 
     // nő mindenfélétől, és ha eléri 1-et, visszaugrik 0-ra, és egy skill point elérhető
-    private float upgradeProgress = 0.0f;
+    [SerializeField] private float upgradeProgress = 0.0f;
 
     [SerializeField] protected float DefaultInteractionScore = 0f;
     
@@ -57,7 +57,7 @@ public class PlayerBehaviour : Synchronizable
         if(!alive || isInLobby) return;
 
         // TODO, most idővel adjuk a skillpointot
-        upgradeProgress += Time.deltaTime / 5.0f; // 5s-enként kap egyet
+        upgradeProgress += Time.deltaTime / 15.0f; // 5s-enként kap egyet
         if (upgradeProgress >= 1.0f) {
             upgradeProgress -= 1.0f;
             GetComponent<PlayerSkillTree>().AddSkillPoint();
@@ -168,6 +168,7 @@ public class PlayerBehaviour : Synchronizable
         if(hunger > health)
         {
             health -= (hunger/health) *  Time.deltaTime; // balance
+            
             Debug.Log($"Current HP: {health}");
         }
     }
@@ -295,6 +296,7 @@ public class PlayerBehaviour : Synchronizable
 
     private void OnInteractionFinished(BaseInteraction interaction)
     {
+        upgradeProgress += 0.2f; //balance
         CurrentInteraction.ApplyStatChanges(this);
         CurrentInteraction = null;
         Debug.Log($"Finished interaction {interaction}, current hunger: {this.hunger}");
