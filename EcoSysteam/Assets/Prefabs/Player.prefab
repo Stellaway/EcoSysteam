@@ -123,7 +123,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c097a59d4d063fb3cb8647e694be953a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  viggleRoom: 0.1
+  viggleRoom: 0.5
   DefaultInteractionScore: 0
   MaxIdleTime: 3.5
 --- !u!114 &-7682182168385630492

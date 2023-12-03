@@ -10,7 +10,7 @@ public class PlayerBehaviour : Synchronizable
     protected float distanceFromTarget = 0f;
 
     //Az érzékenység, hogy mennyire kell közel menni
-    public float viggleRoom = 0.5f;
+    public float viggleRoom = 1f;
     private bool IsAtDestination = false;
 
     protected BaseInteraction CurrentInteraction = null;
@@ -19,12 +19,14 @@ public class PlayerBehaviour : Synchronizable
     private float health = 100;
     private float[] healthmultipliers = {0,0,-1,1}; //fruit, meat, danger, safety
 
-    private float hunger = 60;
+    private float hungergrowthrate = 10f;
+    private float maxhunger = 200;
+    private float hunger = 0;
     private float[] hungermultipliers = {1,0,0,0};
 
 
     private bool alive = true;
-    private float speed = 1.0f;
+    [SerializeField]private float speed = 0.4f;
 
     private float viewRadius = 4;
 
@@ -71,6 +73,15 @@ public class PlayerBehaviour : Synchronizable
 
         }
 
+        //Get hungrier
+        hungerchange();
+
+        //Suffer if too hungry
+        starve();
+
+        //Check if dead
+        starve_to_death();
+
 
         //Ha épp tud csinálni valamit
         if (CurrentInteraction != null && closeEnoughtToInteract())
@@ -82,7 +93,7 @@ public class PlayerBehaviour : Synchronizable
         {
             if (CurrentInteraction == null)
             {
-                Debug.Log($"Picking new Interaction, current interaction: {CurrentInteraction}, direction: {direction}, position: {transform.position}");
+                //Debug.Log($"Picking new Interaction, current interaction: {CurrentInteraction}, direction: {direction}, position: {transform.position}");
                 PickBestInteraction();
             }
         }
@@ -95,6 +106,7 @@ public class PlayerBehaviour : Synchronizable
         {
             Idle_Movement();
         }
+        
         
         
 
@@ -116,11 +128,38 @@ public class PlayerBehaviour : Synchronizable
         {
             
         }
-        Debug.Log($"I am moving to {newPos}");
+        //Debug.Log($"I am moving to {newPos}");
         UpdatePosition(newPos);
 
     }
-    
+
+    private void starve_to_death()
+    {
+        if (health < 0) { 
+            alive = false;
+            Debug.Log("I dieded");
+        }
+    }
+
+    private void starve()
+    {
+        if(hunger > health)
+        {
+            health -= (hunger/health) *  Time.deltaTime; // balance
+            Debug.Log($"Current HP: {health}");
+        }
+    }
+
+    private void hungerchange()
+    {
+        if (hunger < maxhunger)
+        {
+            hunger += Time.deltaTime * hungergrowthrate; //balance
+        }
+        Debug.Log($"Current Hunger:{hunger}");
+
+    }
+
     class ScoredInteraction
     {
         public SmartObject TargetObject;
@@ -138,7 +177,7 @@ public class PlayerBehaviour : Synchronizable
 
         
         var availableObjects = SmartObjectManager.getInstance().getSmartObjectsInRange(this.viewRadius, this.transform.position);
-        Debug.Log($"Available objects: {availableObjects.Count}");
+        //Debug.Log($"Available objects: {availableObjects.Count}");
         foreach (var availableObject in availableObjects)
         {
             //loop through all the interactions
@@ -167,7 +206,10 @@ public class PlayerBehaviour : Synchronizable
         }
 
         //Ha többet akarnánk és onnan random választani, azt itt kéne, a mérete alapján indexelni, mondjuk a top3ból választani
-        var bestScoredInteraction = scoredInteractions.OrderByDescending(i => i.Score).ToList();
+        var bestScoredInteraction = scoredInteractions
+            .OrderByDescending(i => i.Score)
+            .ThenBy(i => (i.TargetObject.transform.position - this.transform.position).magnitude)
+            .ToList();
         
         //actually beállunk felé
         CurrentInteraction = bestScoredInteraction[0].Interaction;
@@ -275,7 +317,7 @@ public class PlayerBehaviour : Synchronizable
     {
         if (CurrentInteraction != null)        
         {
-            Debug.Log($"Currently chasing: {CurrentInteraction.DisplayName}, distance: {distanceFromTarget}");
+            //Debug.Log($"Currently chasing: {CurrentInteraction.DisplayName}, distance: {distanceFromTarget}");
             var dirVec3 = (CurrentInteraction.transform.position - transform.position);
             var dirVec2 = new Vector2(dirVec3.x, dirVec3.y);
             direction = dirVec2.normalized;

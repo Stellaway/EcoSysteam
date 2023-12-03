@@ -23,7 +23,7 @@ public class PlayerSkillTree : NetworkBehaviour
         Speed.Value++;
         UsedSkillPoints++; // a gomb csak akkor engedélyezett, ha van elég skillpoint
     }
-    public float GetSpeed() => 1.0f + 0.8f * (float)Math.Log10((Speed.Value+1)*10); // TODO itt kell majd balanszolni
+    public float GetSpeed() => 0.2f + 0.4f * (float)Math.Log10((Speed.Value+1)*10); // TODO itt kell majd balanszolni
     public bool IsSpeedUpgradeable() => SkillPoints.Value > UsedSkillPoints;
 
     private NetworkVariable<int> Health = new NetworkVariable<int>(
