@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using Unity.Netcode;
 using UnityEngine;
 using System.Linq;
+using System.Collections;
 
 
 public class PlayerBehaviour : Synchronizable
@@ -59,6 +60,7 @@ public class PlayerBehaviour : Synchronizable
     private bool isInLobby = true;
     public void StartGame() {
         isInLobby = false;
+        start_check_for_winner();
     }
 
 
@@ -154,7 +156,7 @@ public class PlayerBehaviour : Synchronizable
 
         if (crown == null)
         {
-            createCrown();
+            
             int n=rnd.Next(3);
             if (n == 0) {
                 accessoryPrefab = tiePrefab;
@@ -228,8 +230,30 @@ public class PlayerBehaviour : Synchronizable
         GameObject go = Instantiate(corpsePrefab, pos, Quaternion.identity);
         go.GetComponent<NetworkObject>().Spawn(); // hogy mindenkin�l megjelenjen
 
-        
         this.GetComponent<NetworkObject>().Despawn();
+
+        start_check_for_winner();
+    }
+
+
+    private void start_check_for_winner() => NetworkManager.Singleton.StartCoroutine(check_for_winner());//azért a networkmanagernek, hogy még életben legyen
+//https://forum.unity.com/threads/how-to-wait-for-a-frame-in-c.24616/S
+    private IEnumerator check_for_winner() {
+        yield return new WaitForSeconds(0.2f);
+        int cnt = 0;
+        PlayerBehaviour player = null;
+
+        foreach (ulong uid in NetworkManager.Singleton.ConnectedClientsIds)
+        {
+            if (NetworkManager.Singleton.SpawnManager.GetPlayerNetworkObject(uid) == null)
+                continue;
+            player = NetworkManager.Singleton.SpawnManager.GetPlayerNetworkObject(uid).GetComponent<PlayerBehaviour>();
+            ++cnt;
+        }
+        if (cnt == 1) {
+            Debug.Log(player + " won!");
+            if (player.crown == null) player.createCrown();
+        }
     }
 
     private void starve()
