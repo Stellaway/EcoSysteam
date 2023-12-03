@@ -2,12 +2,14 @@ using System.Collections.Generic;
 using Unity.Netcode;
 using UnityEngine;
 using System.Linq;
-using Unity.VisualScripting;
+
 
 public class PlayerBehaviour : Synchronizable
 {
+
     public GameObject crownPrefab;
     private GameObject crown;
+
 
     protected Vector2 direction = Vector2.zero;
     protected float distanceFromTarget = 0f;
@@ -17,6 +19,8 @@ public class PlayerBehaviour : Synchronizable
     private bool IsAtDestination = false;
 
     protected BaseInteraction CurrentInteraction = null;
+
+    protected List<GameObject> DangerSources = new List<GameObject>();
 
     private float maxhealth = 100; // a skilltree ezt állítja
     private float health = 100;
@@ -52,6 +56,7 @@ public class PlayerBehaviour : Synchronizable
         isInLobby = false;
     }
 
+
     private void createCrown()
     {
         Vector3 pos = this.transform.position;
@@ -59,7 +64,6 @@ public class PlayerBehaviour : Synchronizable
         crown = Instantiate(crownPrefab, pos, Quaternion.identity);
         crown.GetComponent<NetworkObject>().Spawn();
     }
-
     private void updateCrown()
     {
         crown.GetComponent<NetworkObject>().Despawn();
@@ -69,10 +73,12 @@ public class PlayerBehaviour : Synchronizable
         crown.GetComponent<NetworkObject>().Spawn();
     }
 
+
     // This method will be called every frame on the server side
     protected override void ServerUpdate()
     {
-        if (!alive || isInLobby) return;
+        
+        if(!alive || isInLobby) return;
 
         // TODO, most idővel adjuk a skillpointot
         upgradeProgress += Time.deltaTime / 15.0f; // 5s-enként kap egyet
@@ -140,7 +146,8 @@ public class PlayerBehaviour : Synchronizable
         }
         //Debug.Log($"I am moving to {newPos}");
         UpdatePosition(newPos);
-        if(crown==null) createCrown();
+
+        if (crown == null) createCrown();
         updateCrown();
 
     }
@@ -225,7 +232,7 @@ public class PlayerBehaviour : Synchronizable
     {
         var scoredInteractions = new List<ScoredInteraction>();
         //loop through all available objects
-
+        DangerSources.Clear();
         
         var availableObjects = SmartObjectManager.getInstance().getSmartObjectsInRange(this.viewRadius, this.transform.position);
         //Debug.Log($"Available objects: {availableObjects.Count}");
@@ -246,6 +253,13 @@ public class PlayerBehaviour : Synchronizable
                                                                     TargetObject = availableObject
                                                                 });
 
+                if (interaction.StatChanges.Where(i => i.Type == EInteractionType.danger && i.Value > health).Count() > 0) {
+                    if (!DangerSources.Contains(interaction.gameObject))
+                    {
+                        DangerSources.Add(interaction.gameObject); 
+                    }
+                }
+
             }
         }
         if(scoredInteractions.Count == 0 || scoredInteractions.Sum(i => i.Score) == 0)
@@ -255,6 +269,12 @@ public class PlayerBehaviour : Synchronizable
             
             return;
         }
+
+        //If interaction is close to danger, decrease the score
+        scoredInteractions
+            .Where(i => closeToDanger(i.TargetObject))
+            .ToList()
+            .ForEach(i => { i.Score *= 0.5f; Debug.Log($"Score decreased for interaction: {i.Interaction}"); });
 
         //Ha többet akarnánk és onnan random választani, azt itt kéne, a mérete alapján indexelni, mondjuk a top3ból választani
         var bestScoredInteraction = scoredInteractions
@@ -266,6 +286,19 @@ public class PlayerBehaviour : Synchronizable
         CurrentInteraction = bestScoredInteraction[0].Interaction;
         IsAtDestination = false;
         SetDirectionToInteraction();
+    }
+
+    private bool closeToDanger(SmartObject targetObject)
+    {
+        
+        foreach(var obj in DangerSources)
+        {
+            if((obj.transform.position - targetObject.transform.position).magnitude < 1.0f) //balance
+            {
+                return true;
+            }
+        }
+        return false;
     }
 
     private void Idle_Movement()
@@ -306,6 +339,10 @@ public class PlayerBehaviour : Synchronizable
             score += ScoreChange(change.Type, change.Value);
         }
 
+        if((interaction.gameObject.transform.position - this.transform.position).magnitude < 3)
+        {
+            score *= 3;
+        }
 
         return score;
 
@@ -337,9 +374,10 @@ public class PlayerBehaviour : Synchronizable
     // (at least if I understand it well xd)
     public override void OnNetworkSpawn()
     {
-        if (IsOwner)
+        if (IsOwner) {
             Move();
-        else
+            //GetComponent<SpriteRenderer>().color = Color.yellow;
+        } else
             GetComponent<SpriteRenderer>().color = Color.green;
     }
 
