@@ -18,7 +18,7 @@ public class GUI_lobby_temporary : NetworkBehaviour
     public GameObject clientBtn;
     void OnGUI()
     {
-        GUILayout.BeginArea(new Rect(490, 200, 300, 300));
+        GUILayout.BeginArea(new Rect(350, 200, 300, 300));
         if (!NetworkManager.Singleton.IsClient && !NetworkManager.Singleton.IsServer)
         {
             StartButtons();
