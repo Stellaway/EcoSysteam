@@ -5,6 +5,7 @@ using System.Threading;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
+using Unity.Netcode;
 //using UnityEngine.UIElements;
 
 public class UIController : MonoBehaviour
@@ -40,6 +41,12 @@ public class UIController : MonoBehaviour
 
     void Update()
     {
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            // quit
+            NetworkManager.Singleton.Shutdown();
+            UnityEngine.SceneManagement.SceneManager.LoadScene("MainMenu");
+        }
         if (Input.GetKeyDown(KeyCode.T))
         {
             // Toggle the visibility of the UI element
