@@ -28,6 +28,7 @@ public class PlantBehaviour : Synchronizable
             pos.x += add * rnd.Next(3);
             if (rnd.Next(1) == 0) add *= -1;
             pos.y += add * rnd.Next(5)*(float)0.33;
+            pos = Synchronizable.ClampPos(pos);
             GameObject go = Instantiate(fruitPrefab, pos, Quaternion.identity);
             go.GetComponent<NetworkObject>().Spawn(); // hogy mindenkin�l megjelenjen
 
