@@ -33,7 +33,7 @@ Transform:
   m_GameObject: {fileID: 1800321779586059776}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.14047313, y: -0.63216966, z: 0}
+  m_LocalPosition: {x: -0.37251756, y: 2.6092148, z: 0}
   m_LocalScale: {x: 0.3, y: 0.3, z: 0.3}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -126,7 +126,7 @@ MonoBehaviour:
   viggleRoom: 0.5
   corpsePrefab: {fileID: 6809883915154185286, guid: b579827e0b4756c40a6d406510f5cbe1, type: 3}
   speed: 0.6
-  upgradeProgress: 0.13553233
+  upgradeProgress: 0.44649714
   DefaultInteractionScore: 0
   MaxIdleTime: 3.5
 --- !u!114 &-7682182168385630492
