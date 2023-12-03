@@ -124,6 +124,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   viggleRoom: 0.5
+  corpsePrefab: {fileID: 6809883915154185286, guid: b579827e0b4756c40a6d406510f5cbe1, type: 3}
+  speed: 0.4
   DefaultInteractionScore: 0
   MaxIdleTime: 3.5
 --- !u!114 &-7682182168385630492

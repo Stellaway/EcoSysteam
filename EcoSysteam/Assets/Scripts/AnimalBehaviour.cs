@@ -9,11 +9,20 @@ public class AnimalBehaviour : Synchronizable
 
     // teszt, hogy hogy lehet kommunikálni
     private PlayerBehaviour connectedPlayer;
+    private float playerRefreshmentTimer = 0;
 
 
     // This method will be called every frame on the server side
     protected override void ServerUpdate() {
         Reproduce();
+        
+        
+        if (connectedPlayer == null || playerRefreshmentTimer > 1.0f)
+        {
+            refreshClosestPlayer();
+            playerRefreshmentTimer = 0;
+        }
+        if(connectedPlayer == null) { return; }
 
         // megpróbálunk a connectedplayer felé menni
 
@@ -29,6 +38,10 @@ public class AnimalBehaviour : Synchronizable
         // a játékos felé történő mozgás
         Vector2 newPos = currentPos + dir * speed * delta;
 
+        playerRefreshmentTimer += Time.deltaTime;
+
+
+
         // elküldjük a hálózaton az új pozíciót (TODO ez lehet majd változik)
         if (!PlayerScarilyCloseTestOrFarAf())
             UpdatePosition(newPos);
@@ -40,11 +53,22 @@ public class AnimalBehaviour : Synchronizable
     }
 
     public override void OnNetworkSpawn() {
+        refreshClosestPlayer();
+            
+    }
+
+    public void refreshClosestPlayer()
+    {
         // valahogyan szerzünk egy referenciát
         // (itt most a spawnoláskor legközelebbi játékost célzom meg)
         if (!NetworkManager.Singleton.IsServer)
             return;
-        foreach (ulong uid in NetworkManager.Singleton.ConnectedClientsIds) {
+        foreach (ulong uid in NetworkManager.Singleton.ConnectedClientsIds)
+        {
+            if (NetworkManager.Singleton.SpawnManager.GetPlayerNetworkObject(uid) == null)
+            {
+                continue;
+            }
             PlayerBehaviour player = NetworkManager.Singleton.SpawnManager.GetPlayerNetworkObject(uid).GetComponent<PlayerBehaviour>();
 
             if (connectedPlayer == null ||
@@ -52,7 +76,6 @@ public class AnimalBehaviour : Synchronizable
             > Vector3.Distance(player.transform.position, transform.position))
                 connectedPlayer = player;
         }
-            
     }
 
     // Reference to the Prefab. Drag a Prefab into this field in the Inspector.

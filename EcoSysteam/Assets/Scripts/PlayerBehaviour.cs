@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using Unity.Netcode;
 using UnityEngine;
 using System.Linq;
+using Unity.VisualScripting;
 
 public class PlayerBehaviour : Synchronizable
 {
@@ -21,9 +22,11 @@ public class PlayerBehaviour : Synchronizable
 
     private float hungergrowthrate = 10f;
     private float maxhunger = 200;
-    private float hunger = 0;
+    private float hunger = 200;
     private float[] hungermultipliers = {1,0,0,0};
 
+
+    [SerializeField] private GameObject corpsePrefab;
 
     private bool alive = true;
     [SerializeField]private float speed = 0.4f;
@@ -50,8 +53,9 @@ public class PlayerBehaviour : Synchronizable
     // This method will be called every frame on the server side
     protected override void ServerUpdate()
     {
-        if (isInLobby)
-            return;
+        
+        if(!alive || isInLobby) return;
+
         // TODO, most idővel adjuk a skillpointot
         upgradeProgress += Time.deltaTime / 5.0f; // 5s-enként kap egyet
         if (upgradeProgress >= 1.0f) {
@@ -140,10 +144,23 @@ public class PlayerBehaviour : Synchronizable
 
     private void starve_to_death()
     {
-        if (health < 0) { 
-            alive = false;
+        if (health < 0) {
+
+            die();
             Debug.Log("I dieded");
         }
+    }
+
+    private void die()
+    {
+        alive = false;
+        Vector3 pos = this.transform.position;
+        pos = Synchronizable.ClampPos(pos);
+        GameObject go = Instantiate(corpsePrefab, pos, Quaternion.identity);
+        go.GetComponent<NetworkObject>().Spawn(); // hogy mindenkin�l megjelenjen
+
+        
+        this.GetComponent<NetworkObject>().Despawn();
     }
 
     private void starve()

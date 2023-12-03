@@ -35,7 +35,7 @@ public class PlayerSkillTree : NetworkBehaviour
         Health.Value++;
         UsedSkillPoints++;
     }
-    public float GetHealth() => 100.0f + 50.0f * (float)Math.Log10((Health.Value+1)*10);
+    public float GetHealth() => 50.0f + 50.0f * (float)Math.Log10((Health.Value+1)*10);
     public bool IsHealthUpgradeable() => SkillPoints.Value > UsedSkillPoints;
 
     private NetworkVariable<int> ViewDistance = new NetworkVariable<int>(
