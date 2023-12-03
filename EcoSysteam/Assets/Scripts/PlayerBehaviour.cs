@@ -42,11 +42,16 @@ public class PlayerBehaviour : Synchronizable
 
     [SerializeField] protected float MaxIdleTime = 5f; //In sec
 
-
+    private bool isInLobby = true;
+    public void StartGame() {
+        isInLobby = false;
+    }
 
     // This method will be called every frame on the server side
     protected override void ServerUpdate()
     {
+        if (isInLobby)
+            return;
         // TODO, most idővel adjuk a skillpointot
         upgradeProgress += Time.deltaTime / 5.0f; // 5s-enként kap egyet
         if (upgradeProgress >= 1.0f) {

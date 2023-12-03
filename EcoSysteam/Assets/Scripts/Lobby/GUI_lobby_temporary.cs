@@ -51,7 +51,7 @@ public class GUI_lobby_temporary : NetworkBehaviour
         if (serverBtn) NetworkManager.Singleton.StartServer();
     }
 
-    //kiszervezés a gombokhoz, hogyha a guin kívül csinálnánk
+    //kiszervezï¿½s a gombokhoz, hogyha a guin kï¿½vï¿½l csinï¿½lnï¿½nk
     public static void StartingHost()
     {
         NetworkManager.Singleton.StartHost();
@@ -105,6 +105,15 @@ public class GUI_lobby_temporary : NetworkBehaviour
             if (GUILayout.Button(NetworkManager.Singleton.IsServer ? "Start Game" : "Nemvagyokitt, nekattintside"))
             {
                 Debug.Log("Starting game!");
+
+
+
+                foreach (ulong uid in NetworkManager.Singleton.ConnectedClientsIds) {
+                    PlayerBehaviour player = NetworkManager.Singleton.SpawnManager.GetPlayerNetworkObject(uid).GetComponent<PlayerBehaviour>();
+                    player.StartGame();
+                }
+
+
                 NetworkManager.SceneManager.LoadScene("SampleScene", LoadSceneMode.Single);
             }
         }
