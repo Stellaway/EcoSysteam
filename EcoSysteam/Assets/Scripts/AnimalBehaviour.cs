@@ -42,7 +42,8 @@ public class AnimalBehaviour : Synchronizable
     public override void OnNetworkSpawn() {
         // valahogyan szerzünk egy referenciát
         // (itt most a spawnoláskor legközelebbi játékost célzom meg)
-
+        if (!NetworkManager.Singleton.IsServer)
+            return;
         foreach (ulong uid in NetworkManager.Singleton.ConnectedClientsIds) {
             PlayerBehaviour player = NetworkManager.Singleton.SpawnManager.GetPlayerNetworkObject(uid).GetComponent<PlayerBehaviour>();
 
