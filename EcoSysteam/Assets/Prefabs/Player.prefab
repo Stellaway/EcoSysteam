@@ -33,7 +33,7 @@ Transform:
   m_GameObject: {fileID: 1800321779586059776}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 2.2034163, y: -3.2273664, z: 0}
+  m_LocalPosition: {x: -1.9729736, y: 3.5621436, z: 0}
   m_LocalScale: {x: 0.3, y: 0.3, z: 0.3}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -80,7 +80,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: ffd499ca896869c4cb0e00beabb82848, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 1719ba4155a4c154ebd2d7602660f3f9, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -124,10 +124,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   crownPrefab: {fileID: 8393226344324705955, guid: 978162f8af7713341a72c3731f96f43c, type: 3}
+  tiePrefab: {fileID: 8393226344324705955, guid: 2ddf7ea990f018c4aa777e706b9909df, type: 3}
+  patchPrefab: {fileID: 8393226344324705955, guid: 0ba5dbb63afff6c46bcb388934d6ca1a, type: 3}
   viggleRoom: 0.5
   corpsePrefab: {fileID: 6809883915154185286, guid: b579827e0b4756c40a6d406510f5cbe1, type: 3}
   speed: 0.6
-  upgradeProgress: 0.4518706
+  upgradeProgress: 0.6023915
   DefaultInteractionScore: 0
   MaxIdleTime: 3.5
 --- !u!114 &-7682182168385630492

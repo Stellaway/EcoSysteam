@@ -8,7 +8,12 @@ public class PlayerBehaviour : Synchronizable
 {
 
     public GameObject crownPrefab;
+    public GameObject tiePrefab;
+    public GameObject patchPrefab;
+    private System.Random rnd = new System.Random();
     private GameObject crown;
+    private GameObject accessory;
+    private GameObject accessoryPrefab;
 
 
     protected Vector2 direction = Vector2.zero;
@@ -147,8 +152,37 @@ public class PlayerBehaviour : Synchronizable
         //Debug.Log($"I am moving to {newPos}");
         UpdatePosition(newPos);
 
-        if (crown == null) createCrown();
+        if (crown == null)
+        {
+            createCrown();
+            int n=rnd.Next(3);
+            if (n == 0) {
+                accessoryPrefab = tiePrefab;
+                Vector3 pos = this.transform.position;
+                pos.y += 1;
+                accessory = Instantiate(tiePrefab, pos, Quaternion.identity);
+                accessory.GetComponent<NetworkObject>().Spawn();
+            }
+            if (n == 1) {
+                accessoryPrefab = patchPrefab;
+                Vector3 pos = this.transform.position;
+                pos.y += 1;
+                accessory = Instantiate(patchPrefab, pos, Quaternion.identity);
+                accessory.GetComponent<NetworkObject>().Spawn();
+            }
+        }
         updateCrown();
+        if (accessory != null)
+        {
+            accessory.GetComponent<NetworkObject>().Despawn();
+            Vector3 pos = this.transform.position;
+            pos.y += -0.3f;
+            pos.z = -1;
+            if (accessoryPrefab == patchPrefab)
+                pos.y += 1.1f;
+            accessory = Instantiate(accessoryPrefab, pos, Quaternion.identity);
+            accessory.GetComponent<NetworkObject>().Spawn();
+        }
 
     }
 
