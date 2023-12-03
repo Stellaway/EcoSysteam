@@ -19,7 +19,7 @@ public class GUI_lobby_temporary : NetworkBehaviour
 
     void OnGUI()
     {
-        GUILayout.BeginArea(new Rect(30, 20, 300, 300));
+        GUILayout.BeginArea(new Rect(10, 20, 300, 300));
         if (!NetworkManager.Singleton.IsClient && !NetworkManager.Singleton.IsServer)
         {
             StartButtons();
@@ -37,18 +37,27 @@ public class GUI_lobby_temporary : NetworkBehaviour
 
     static string IP = "127.0.0.1";
     static string Port = "7777";
+    public Texture2D hostTex;
+    public Texture2D hostTexD;
+    public Texture2D serverTex;
+    public Texture2D serverTexD;
+    public Texture2D startTex;
+    public Texture2D startTexD;
+    public Texture2D clientTex;
+    public Texture2D clientTexD;
 
-    private GUIStyle createButtonStyle(string name)
+    static GUIStyle createButtonStyle(Texture2D tex, Texture2D tex2)
     {
-        string filename = "Assets/Textures/"+name+".png";
-        var rawData = System.IO.File.ReadAllBytes(filename);
-        Texture2D tex = new Texture2D(2, 2); // Create an empty Texture; size doesn't matter (she said)
-        tex.LoadImage(rawData);
+        //string filename = "Assets/Textures/"+name+".png";
+        //var rawData = System.IO.File.ReadAllBytes(filename);
+        //Texture2D tex = new Texture2D(2, 2); // Create an empty Texture; size doesn't matter (she said)
+        //tex.LoadImage(rawData);
 
-        filename = "Assets/Textures/" + name + "Darker.png";
-        rawData = System.IO.File.ReadAllBytes(filename);
-        Texture2D tex2 = new Texture2D(2, 2); // Create an empty Texture; size doesn't matter (she said)
-        tex2.LoadImage(rawData);
+        //filename = "Assets/Textures/" + name + "Darker.png";
+        //rawData = System.IO.File.ReadAllBytes(filename);
+        //Texture2D tex2 = new Texture2D(2, 2); // Create an empty Texture; size doesn't matter (she said)
+        //tex2.LoadImage(rawData);
+
         return new GUIStyle()
         {
             normal = new GUIStyleState() { background = tex },
@@ -57,17 +66,17 @@ public class GUI_lobby_temporary : NetworkBehaviour
         };
     }
 
-    int w = 150;
-    int h = 45;
+    static int w = 150;
+    static int h = 45;
 
     private void StartButtons()
     {
         IP = GUILayout.TextField(IP);//(IP, 15) for max length
         Port = GUILayout.TextField(Port);
 
-        var hostBtn = GUILayout.Button("", createButtonStyle("HostButton"), GUILayout.Width(w), GUILayout.Height(h));
-        var clientBtn = GUILayout.Button("", createButtonStyle("ClientButton"), GUILayout.Width(w), GUILayout.Height(h));
-        var serverBtn = GUILayout.Button("", createButtonStyle("ServerButton"), GUILayout.Width(w), GUILayout.Height(h));
+        var hostBtn = GUILayout.Button("", createButtonStyle(hostTex,hostTexD), GUILayout.Width(w), GUILayout.Height(h));
+        var clientBtn = GUILayout.Button("", createButtonStyle(clientTex,clientTexD), GUILayout.Width(w), GUILayout.Height(h));
+        var serverBtn = GUILayout.Button("", createButtonStyle(serverTex,serverTexD), GUILayout.Width(w), GUILayout.Height(h));
 
 
         if (hostBtn) NetworkManager.Singleton.StartHost();
@@ -126,7 +135,7 @@ public class GUI_lobby_temporary : NetworkBehaviour
     {
         if (NetworkManager.Singleton.IsServer)
         {
-            if (GUILayout.Button(NetworkManager.Singleton.IsServer ? "" : "Nemvagyokitt, nekattintside", createButtonStyle("StartButton"), GUILayout.Width(w), GUILayout.Height(h)))
+            if (GUILayout.Button(NetworkManager.Singleton.IsServer ? "" : "Nemvagyokitt, nekattintside", createButtonStyle(startTex,startTexD), GUILayout.Width(w), GUILayout.Height(h)))
             {
                 Debug.Log("Starting game!");
 

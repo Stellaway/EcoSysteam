@@ -582,6 +582,14 @@ MonoBehaviour:
   hostBtn: {fileID: 2105817656}
   serverBtn: {fileID: 1688571969}
   clientBtn: {fileID: 1480018723}
+  hostTex: {fileID: 2800000, guid: 68be05ce02b9aea4db3d9533cac619bf, type: 3}
+  hostTexD: {fileID: 2800000, guid: 6e07b15187671df4ca532728f5f29bb0, type: 3}
+  serverTex: {fileID: 2800000, guid: c10f7f15a636d78459c44398ede90ed2, type: 3}
+  serverTexD: {fileID: 2800000, guid: 6a3afa5d6ae3406499b1ec6596f020f5, type: 3}
+  startTex: {fileID: 2800000, guid: a08310d881385f046b44ba51eb6348c1, type: 3}
+  startTexD: {fileID: 2800000, guid: 9242ceb9345e8254fa763054a446a3f9, type: 3}
+  clientTex: {fileID: 2800000, guid: a77c8490dd72523459ff6bf6d05e3e14, type: 3}
+  clientTexD: {fileID: 2800000, guid: 34582e11a779067418d89c925a25ca0d, type: 3}
 --- !u!1 &521943136
 GameObject:
   m_ObjectHideFlags: 0
