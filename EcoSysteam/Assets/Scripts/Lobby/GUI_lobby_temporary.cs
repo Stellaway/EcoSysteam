@@ -19,7 +19,7 @@ public class GUI_lobby_temporary : NetworkBehaviour
 
     void OnGUI()
     {
-        GUILayout.BeginArea(new Rect(10, 20, 300, 300));
+        GUILayout.BeginArea(new Rect(50, 60, 400, 600));
         if (!NetworkManager.Singleton.IsClient && !NetworkManager.Singleton.IsServer)
         {
             StartButtons();
@@ -66,8 +66,8 @@ public class GUI_lobby_temporary : NetworkBehaviour
         };
     }
 
-    static int w = 150;
-    static int h = 45;
+    static int w = 330;
+    static int h = 105;
 
     private void StartButtons()
     {
