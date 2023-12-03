@@ -243,8 +243,10 @@ public class PlayerBehaviour : Synchronizable
     // (at least if I understand it well xd)
     public override void OnNetworkSpawn()
     {
-        if (IsOwner)
+        if (IsOwner) {
             Move();
+            GetComponent<SpriteRenderer>().color = Color.blue;
+        }
     }
 
     // Ask the server to place the bogyesz on a random position

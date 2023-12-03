@@ -18,8 +18,11 @@ public abstract class Synchronizable : NetworkBehaviour
     // Update is called once per frame
     void Update() {
         // Calling the function to calculate the new state, only on the server side
-        if (NetworkManager.Singleton.IsServer)
+        if (NetworkManager.Singleton.IsServer) {
+            // update the position to be inside bounds
+            UpdatePosition(new Vector2(transform.position.x, transform.position.y));
             ServerUpdate();
+        }
     }
 
    
