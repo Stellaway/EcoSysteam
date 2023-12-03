@@ -73,11 +73,9 @@ public class PlayerBehaviour : Synchronizable
     }
     private void updateCrown()
     {
-        crown.GetComponent<NetworkObject>().Despawn();
         Vector3 pos = this.transform.position;
         pos.y += 2;
-        crown = Instantiate(crownPrefab, pos, Quaternion.identity);
-        crown.GetComponent<NetworkObject>().Spawn();
+        crown.transform.position = pos;
     }
 
 
@@ -173,17 +171,16 @@ public class PlayerBehaviour : Synchronizable
                 accessory.GetComponent<NetworkObject>().Spawn();
             }
         }
-        updateCrown();
+        if(crown!=null)
+            updateCrown();
         if (accessory != null)
         {
-            accessory.GetComponent<NetworkObject>().Despawn();
             Vector3 pos = this.transform.position;
             pos.y += -0.3f;
             pos.z = -1;
             if (accessoryPrefab == patchPrefab)
                 pos.y += 1.1f;
-            accessory = Instantiate(accessoryPrefab, pos, Quaternion.identity);
-            accessory.GetComponent<NetworkObject>().Spawn();
+            accessory.transform.position = pos;
         }
 
     }
@@ -224,6 +221,7 @@ public class PlayerBehaviour : Synchronizable
 
     private void die()
     {
+        if (accessory != null) accessory.GetComponent<NetworkObject>().Despawn();
         alive = false;
         Vector3 pos = this.transform.position;
         pos = Synchronizable.ClampPos(pos);

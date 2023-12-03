@@ -16,9 +16,10 @@ public class GUI_lobby_temporary : NetworkBehaviour
 
     [SerializeField]
     public GameObject clientBtn;
+
     void OnGUI()
     {
-        GUILayout.BeginArea(new Rect(350, 200, 300, 300));
+        GUILayout.BeginArea(new Rect(30, 20, 300, 300));
         if (!NetworkManager.Singleton.IsClient && !NetworkManager.Singleton.IsServer)
         {
             StartButtons();
@@ -36,14 +37,37 @@ public class GUI_lobby_temporary : NetworkBehaviour
 
     static string IP = "127.0.0.1";
     static string Port = "7777";
-    
-    static void StartButtons()
+
+    private GUIStyle createButtonStyle(string name)
+    {
+        string filename = "Assets/Textures/"+name+".png";
+        var rawData = System.IO.File.ReadAllBytes(filename);
+        Texture2D tex = new Texture2D(2, 2); // Create an empty Texture; size doesn't matter (she said)
+        tex.LoadImage(rawData);
+
+        filename = "Assets/Textures/" + name + "Darker.png";
+        rawData = System.IO.File.ReadAllBytes(filename);
+        Texture2D tex2 = new Texture2D(2, 2); // Create an empty Texture; size doesn't matter (she said)
+        tex2.LoadImage(rawData);
+        return new GUIStyle()
+        {
+            normal = new GUIStyleState() { background = tex },
+            hover = new GUIStyleState() { background = tex2 },
+            active = new GUIStyleState() { background = tex }
+        };
+    }
+
+    int w = 150;
+    int h = 45;
+
+    private void StartButtons()
     {
         IP = GUILayout.TextField(IP);//(IP, 15) for max length
         Port = GUILayout.TextField(Port);
-        var hostBtn = GUILayout.Button("Host");
-        var clientBtn = GUILayout.Button("Client");
-        var serverBtn = GUILayout.Button("Server");
+
+        var hostBtn = GUILayout.Button("", createButtonStyle("HostButton"), GUILayout.Width(w), GUILayout.Height(h));
+        var clientBtn = GUILayout.Button("", createButtonStyle("ClientButton"), GUILayout.Width(w), GUILayout.Height(h));
+        var serverBtn = GUILayout.Button("", createButtonStyle("ServerButton"), GUILayout.Width(w), GUILayout.Height(h));
 
 
         if (hostBtn) NetworkManager.Singleton.StartHost();
@@ -102,7 +126,7 @@ public class GUI_lobby_temporary : NetworkBehaviour
     {
         if (NetworkManager.Singleton.IsServer)
         {
-            if (GUILayout.Button(NetworkManager.Singleton.IsServer ? "Start Game" : "Nemvagyokitt, nekattintside"))
+            if (GUILayout.Button(NetworkManager.Singleton.IsServer ? "" : "Nemvagyokitt, nekattintside", createButtonStyle("StartButton"), GUILayout.Width(w), GUILayout.Height(h)))
             {
                 Debug.Log("Starting game!");
 
