@@ -118,4 +118,16 @@ public class GUI_lobby_temporary : NetworkBehaviour
             }
         }
     }
+
+
+
+    void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            // quit
+            NetworkManager.Singleton.Shutdown();
+            UnityEngine.SceneManagement.SceneManager.LoadScene("MainMenu");
+        }
+    }
 }
