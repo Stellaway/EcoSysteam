@@ -72,3 +72,8 @@ A mostani verzió hagy még némi kevetnivalót, azonban egész jó játékélm�
 Jelenleg is fennálló balanszolási probléma, hogy a húsevés kifejlesztése nagyon erős, azonban így is figyelnünk kell a játékos környezetére, mivel könnyedén csapdába ejthet a kis űrlény mohó gondolkodása.
 
 Minden meglátást szívesen fogadunk a playtestereinktől. :))
+
+## Playtest meglátások, jövőbeli tervek
+    - Jó lenne, ha a játékosok ennék egymást
+    - A fák előbb-utóbb elsorvadhatnának
+    - AI viewdistance-hez egy kör vagy valami
