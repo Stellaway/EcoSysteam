@@ -26,7 +26,7 @@ A Unity-ben teszteléshez a HOST gombot kell megnyomni (miután elindult a ját�
 
 ## Felhasznált könyvtárak
 
-A projekt Unity Netcode for GameObjects 1.6.0-t használ, alatta pedig Unity Transport 2.1.0 van. Legalább UTP 2.0.0 kell, hogy a webes verzió is működjön.
+A projekt [Unity Netcode for GameObjects](https://docs-multiplayer.unity3d.com/netcode/current/installation/index.html) 1.6.0-t használ, alatta pedig Unity Transport 2.1.0 van. Legalább UTP 2.0.0 kell, hogy a webes verzió is működjön.
 
 ## Szinkronizáció
 
