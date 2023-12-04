@@ -38,16 +38,37 @@ A játékos prefab tartalmazza az AI-t megvalósító PlayerBehaviour, illetve a
 
 A játék indítása előtt egy lobby-ban lehet megvárni a játékosok csatlakozását, ekkor már felépül a kapcsolat. Majd a játék indításakor a NetworkManager SceneManager-e segítségével történik a játéknézet betöltése, minden kliensnél egyszerre, így kezdhető fair-en a játék.
 
-# Felhasznált források:
+# AI
+
+A játék mesterséges intelligenciája szükséglet alapú.
+A játék szereplői mind intelligens objektumok (SmartObject), amik képesek hirdetni különböző akciókat (Interactions)
+és ezeknek az akcióknak a hatásait (StatChanges).
+Az AI, ahelyett, hogy megállapítaná az egyes tárgyakról, hogy milyen értékesek számára, a tárgyak által kínált hirdetéseket veszi figyelembe.
+Egy intelligens objektum több interakciót is hirdethet, a játékos ezek közül választ egyet.
+
+Az AI nem lát minden objektumot, van egy bizonyos érzékelési határa.
+Arról, hogy elérhetőek legyenek számára az intelligens objektumok és ezáltal az interakciók, egy SmartObjectManager gondoskodik.
+
+Az AI döntéskor figyelembe veszi az elérhető interakciók pontszámát.
+A pont számítás a ScoreInteractions függvényben történik. 
+Az AI figyelembe veszi: az interakció típusát, változás mértékét, a veszélyt és az objektum távolságát.
+
+Az AI reagál a PlayerSkillTreeben történő fejlesztésekre, a gondolkodása az egyes attribútumszorzókban valósul meg.
+Pl.: ha a játékos kifejleszti a húsevőséget, akkor hirtelen a hús-t adó interakció kedvezőbb lesz neki.
+
+A játékos mohó és hóbortos. Ha talál egy célt, akkor azt energiát nem kímélve üldözi, azonban ha nincs semmi interakció, ami felkeltette az érdeklődését, bolyong, tétlen.
+
+## Felhasznált források:
 
 Iain McManus: Needs-Based AI in unity
 
+# Balance
 
-# Aktuális állapot
+A balanszolás kényes folyamat. A sokszínű interakciók bonyolult módon hatnak egymásra.
+A legnagyobb kihívás a játékos éhségének és a pontszerzés sebességének meghatározása volt.
+Sok iterációban lehetetlen volt életben maradni, míg fejlődött a kis alienünk, sok iterációban lehetetlen volt meghalni.
+A mostani verzió hagy még némi kevetnivalót, azonban egész jó játékélményt biztosít.
 
-perpillanat annyi a demo "ai"-ja a dolognak, hogy:
+Jelenleg is fennálló balanszolási probléma, hogy a húsevés kifejlesztése nagyon erős, azonban így is figyelnünk kell a játékos környezetére, mivel könnyedén csapdába ejthet a kis űrlény mohó gondolkodása.
 
-- fa ill bokor nem csinál semmit (spawnolt helyen marad)
-- kukac menekül, ha a player közel van
-- Player kiválaszt egy random interactiont és azt megcsinálja, majd újat választ
-
+Minden meglátást szívesen fogadunk a playtestereinktől. :))
